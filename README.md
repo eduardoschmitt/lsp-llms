@@ -45,7 +45,7 @@ Planned LLM entry points (`llms.txt`, `llms-full.txt`) will be added after enoug
 
 ## Status
 
-Early incremental build. Currently available: syntax core, variables, limitations-guardrail, control-flow, string-function, date/time, conversion, arrays, and numeric/math slices. See `docs/index.md` for coverage.
+Early incremental build. Currently available: syntax core, variables, limitations-guardrail, control-flow, string-function, date/time, conversion, arrays, numeric/math, and collections slices. See `docs/index.md` for coverage.
 
 ## Acknowledgements
 

@@ -110,7 +110,7 @@ Se (vnX < vnY) {
 }
 ```
 
-> Documentation note: the source wording for the single-line-block rule is garbled in Portuguese (“basta adicionar identado na linha de baixo e identado”). The meaning above — one indented statement without delimiters — is the best faithful reading. Exact indentation requirements for that form are not documented.
+> Documentation note: the source wording for the single-line-block rule is garbled in Portuguese ("basta adicionar identado na linha de baixo e identado"). The meaning above — one indented statement without delimiters — is the best faithful reading. Exact indentation requirements for that form are not documented.
 
 ## Comments
 
@@ -192,7 +192,7 @@ The Correct/Incorrect marks above are source style guidance about readability, n
 
 The following are documented as community/Senior standards or recommendations. Do not enforce them as compiler rules:
 
-- **Indentation:** 2 spaces per level (described as the Senior standard, “ao invés de 4”). Example blocks in the source consistently use 2 spaces.
+- **Indentation:** 2 spaces per level (described as the Senior standard, "ao invés de 4"). Example blocks in the source consistently use 2 spaces.
 - **Continuation layout:** place the continuing `\` around column 80, align continued columns for readability, keep spacing consistent, and indent 2 spaces per level.
 - **Comment markers with correctness labels** (for example, `@ Incorrect @`, `@ Correct @`) are documentation style in the source, not a language feature.
 
@@ -206,4 +206,4 @@ Do not generate these forms:
 
 ## Provenance
 
-Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Início Rápido` (“Primeiro Programa LSP”, “Conceitos Fundamentais”, “Quebra de Linha em Strings Longas”), `Sintaxe e Estrutura` (including “Estrutura Básica”, “Case Sensitivity”, “Identação e Espaçamento”, “Estruturas de Bloco”), `Caracteres com Comportamento Especial`, and `Comentários`. Portuguese explanatory prose was translated into English; LSP keywords, identifiers, literals, and code examples were preserved unchanged. Senior Sistemas is the authoritative source for official behavior.
+Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Início Rápido` ("Primeiro Programa LSP", "Conceitos Fundamentais", "Quebra de Linha em Strings Longas"), `Sintaxe e Estrutura` (including "Estrutura Básica", "Case Sensitivity", "Identação e Espaçamento", "Estruturas de Bloco"), `Caracteres com Comportamento Especial`, and `Comentários`. Portuguese explanatory prose was translated into English; LSP keywords, identifiers, literals, and code examples were preserved unchanged. Senior Sistemas is the authoritative source for official behavior.

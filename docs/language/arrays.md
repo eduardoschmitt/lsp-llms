@@ -166,9 +166,9 @@ Loop bounds here (`i < 3` over a `[3]` collection) are demonstrated pairings, no
 ## Explicitly not arrays
 
 - `GerTabAlf[1]` / `GerTabNum[1]`: system-variable registers with their own single-array-in-memory restriction — future system domain.
-- `Acumulador[1].Media_Mensal`: `Tabela` row access — future table domain.
-- `resultado[0]` / `resultado[1]`: JSON-path fragments in `ValorElementoJson` limitation notes (documented as not working there) — future JSON domain.
-- `Lista*` / `ListaRegra*`: dynamic and rule lists — future list domains.
+- `Acumulador[1].Media_Mensal`: `Tabela` row access — documented in `collections.md`.
+- `resultado[0]` / `resultado[1]`: JSON-path fragments in `ValorElementoJson` limitation notes (documented as not working there) — documented in `../data/json.md`.
+- `Lista*` / `ListaRegra*`: dynamic and rule lists — documented in `collections.md`.
 - `Cur_Consulta.SQL`, grid fields, cursor handles: not bracket collections.
 
 ## Deliberately not documented

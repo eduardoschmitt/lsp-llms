@@ -307,7 +307,7 @@ UltimoDia(vnData);
 ConvDataExt(vnData, vaDataUltimoDia);
 ```
 
-What can be said: both appear with exactly 2 arguments; the first position consistently holds the source representation and the second receives into the other representation. Parameter direction, types beyond the demonstrated `Alfa`/`Numero` variables, validity rules, and format support are undocumented — directions are therefore classified unknown. Do not present these as established conversion APIs.
+What can be said: both appear with exactly 2 arguments; the first position consistently holds the source representation and the second receives into the other representation. Parameter direction, types beyond the demonstrated `Alfa`/`Numero` variables, validity rules, and format support are undocumented — directions are therefore classified unknown. Do not present these as established conversion APIs. (`dates-time.md` shows the same usages in date workflows with the same classification.)
 
 ## Conversion failures (source-backed)
 
@@ -327,10 +327,10 @@ Demonstrated `Data`-to-`Numero` assignments (`vnDataSis = DatSis;`, `vnDataAtual
 - `ConverteCodificacaoString`, `ConverteTexto`: encoding conversion — documented in `strings.md`.
 - `ConverteDataBanco`, `ConverteDataToDB`, `ConverteDataSqlSenior2`: database string forms — documented in `dates-time.md`.
 - `CodData`, `DecodData`, `DesMontaData`, `MontaData`: date construction/decomposition — documented in `dates-time.md`.
-- `Formatar`, `FormatarN`: Delphi-style number formatting — future numbers domain (formatting, not conversion per the representation distinction).
-- `RestoDivisao`, `Dividir`, `Truncar`, `Arredonda*`: numeric operations — future numbers domain.
+- `Formatar`, `FormatarN`: Delphi-style number formatting — documented in `numeric-math.md` (formatting, not conversion per the representation distinction).
+- `RestoDivisao`, `Dividir`, `Truncar`, `Arredonda*`: numeric operations — documented in `numeric-math.md`.
 - `DeixaNumeros` (keep only digits): validation domain.
-- `Extenso`, `ExtensoMoeda`: value-to-words — future numbers domain.
+- `Extenso`, `ExtensoMoeda`: value-to-words — documented in `numeric-math.md`.
 
 ## Conflicts and uncertainty on this page
 

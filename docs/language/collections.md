@@ -202,7 +202,7 @@ vlClientes.Chave("Cidade;Nome");
 @ For descending order, create an auxiliary field or reorganize the data @
 ```
 
-Stated: the list reorganizes automatically, no reload needed, ordering is always ascending (descending needs auxiliary fields). Memory release is the list's own responsibility — no user call exists; remove records individually or with `Limpar`. Cursors-vs-lists guidance: cursors suit fresh or single-pass data (with the noted cost that `Anterior` and re-sorting need new SQL); lists suit repeated navigation, computed storage, and unknown-count accumulation with report/printing reuse. Cursor execution itself belongs to the future database slice.
+Stated: the list reorganizes automatically, no reload needed, ordering is always ascending (descending needs auxiliary fields). Memory release is the list's own responsibility — no user call exists; remove records individually or with `Limpar`. Cursors-vs-lists guidance: cursors suit fresh or single-pass data (with the noted cost that `Anterior` and re-sorting need new SQL); lists suit repeated navigation, computed storage, and unknown-count accumulation with report/printing reuse. Cursor execution itself is documented in `../database/cursors-sql.md`.
 
 ## ListaRegra — rule-list API core
 
@@ -301,7 +301,7 @@ Se (vaObteve = "S") {
 
 Note: those two `Mensagem` lines concatenate inside parameters — preserved for the getter shapes, not endorsed; see limitations L3. Sibling getters `ListaRegraObterValorNumero` / `ListaRegraObterValorData` appear in examples with the same shape.
 
-Full-catalog deferral: roughly forty further `ListaRegra*` functions (search, extended navigation, row manipulation, permissions, utilities) fill a dedicated source catalog. They belong to a future database/Senior slice alongside JSON loading semantics — this page establishes only the create/load/navigate/read core above.
+Full-catalog deferral: roughly forty further `ListaRegra*` functions (search, extended navigation, row manipulation, permissions, utilities) fill a dedicated source catalog. They remain deferred to a future rule-list/Senior slice (the database slice covers cursors/SQL, not this catalog) — this page establishes only the create/load/navigate/read core above.
 
 ## Tabela
 
@@ -334,7 +334,7 @@ So `Tabela` rows accept `[N]` indexing (1-based in every demonstration) with `.c
 
 ## Grid (minimal evidence)
 
-No Grid declaration, initialization, or iteration is documented. The entire `Grid` evidence is: `MinhaGrid.CampoDecimal` / `.CampoData` / `Grid.Campo` as conversion targets requiring intermediate variables (limitations L6), and a web-service grid API (`nomeWebService.NomeGrid.CriarLinha();`, `QtdLinhas`, `LinhaAtual`, entry/exit patterns, Cursor-to-Lista-to-Grid pipeline) that belongs to the future web-service domain. Whether a Grid is a UI widget, a result container, or something else is unstated — no characterization is given here beyond the field-write restriction.
+No Grid declaration, initialization, or iteration is documented. The entire `Grid` evidence is: `MinhaGrid.CampoDecimal` / `.CampoData` / `Grid.Campo` as conversion targets requiring intermediate variables (limitations L6), and a web-service grid API (`nomeWebService.NomeGrid.CriarLinha();`, `QtdLinhas`, `LinhaAtual`, entry/exit patterns, Cursor-to-Lista-to-Grid pipeline) documented in `../integration/http-webservices.md`. Whether a Grid is a UI widget, a result container, or something else is unstated — no characterization is given here beyond the field-write restriction.
 
 ## Conservative project guidance
 
@@ -348,11 +348,11 @@ All guidance above is project caution, not compiler semantics.
 
 ## Deferred constructs and functions
 
-- Full `ListaRegra*` catalog (~40 search/navigate/manipulate/permission/utility functions): future database/Senior slice.
+- Full `ListaRegra*` catalog (~40 search/navigate/manipulate/permission/utility functions): still deferred to a future rule-list/Senior slice.
 - `ListaSecao`, `InsClauSQLWhere`, cursor methods (`Cur.AbrirCursor()`, `Cur.Achou`, `Cur.Proximo()`): report/database/WS domains (cursor shares `Proximo`/`Achou` names — name overlap only).
 - `GerTabAlf`/`GerTabNum` + `LimpaGerTab*`: future system/reports slice.
-- Web-service grid API (`CriarLinha`, `QtdLinhas`, `LinhaAtual`): future web-service slice.
-- `ValorElementoJson`, JSON arrays: future JSON slice.
+- Web-service grid API (`CriarLinha`, `QtdLinhas`, `LinhaAtual`): documented in `../integration/http-webservices.md` (Senior web-service ports).
+- `ValorElementoJson`, JSON arrays: documented in `../data/json.md`.
 - `LimparChave`: observed-only, unknown semantics (see search section).
 
 ## Conflicts and uncertainty on this page

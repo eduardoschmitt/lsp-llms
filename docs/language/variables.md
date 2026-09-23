@@ -105,7 +105,7 @@ vaNome[vnIndice] = "Nome";
 vaNome[vnIndice + 1 * 2 ] = "Nome";
 ```
 
-> Documentation note (conflict, do not resolve): the same bracket syntax is used elsewhere with a different meaning. The later `Definição de Arrays` section documents `Definir Alfa vaNomes[10];` as an array holding multiple values of the same type, with zero-based examples (`vaNomes[0] = "João";`), while this section documents `Definir Alfa vaNome[30];` as one string with maximum length and one-based indexed examples (`vaNome[1] = "Nome";`). Both wordings are preserved here as found; a future arrays slice must reconcile indexing, sizing, and whether these are one mechanism or two.
+> Documentation note (conflict, do not resolve): the same bracket syntax is used elsewhere with a different meaning. The later `Definição de Arrays` section documents `Definir Alfa vaNomes[10];` as an array holding multiple values of the same type, with zero-based examples (`vaNomes[0] = "João";`), while this section documents `Definir Alfa vaNome[30];` as one string with maximum length and one-based indexed examples (`vaNome[1] = "Nome";`). Both wordings are preserved here as found; the sizing/indexing ambiguity is owned as an unresolved conflict in `arrays.md`, which must not be read as reconciling whether these are one mechanism or two.
 
 ## `Data` assignment rule (as stated)
 
@@ -113,7 +113,7 @@ The source states, under variable rules:
 
 - For `Data` variables, use the `MontaData(dd,mm,yyyy,vdData)` function to assign a date, or assign the `DatSis` system variable.
 
-This is the extent of the rule in this slice. `MontaData` parameters, return mechanics, date formats, and `DatSis` semantics belong to the dates and system-variables slices.
+This is the extent of the rule in this slice. `MontaData` parameters, return mechanics, and date formats are documented in `dates-time.md`; `DatSis` semantics belong to a future system-variables slice.
 
 > Documentation note: the later Arrays section contains date examples that assign string literals (`vdDatas[0] = "01/01/2020";`). That conflicts with the `MontaData`-only assignment rule above. The conflict is recorded, not resolved.
 
@@ -121,7 +121,7 @@ This is the extent of the rule in this slice. `MontaData` parameters, return mec
 
 Documented recommendation with error-avoidance rationale:
 
-- Declare all variables at the start of the rule (regra). Declaring inside a conditional block, or not declaring at all, is given as the cause of the “Variável não definida” problem and “may cause errors” (PODE CAUSAR ERROS).
+- Declare all variables at the start of the rule (regra). Declaring inside a conditional block, or not declaring at all, is given as the cause of the "Variável não definida" problem and "may cause errors" (PODE CAUSAR ERROS).
 
 Incorrect form (source-faithful):
 
@@ -158,7 +158,7 @@ Definir Numero vnAno;
 DecodData(vdData, vnDia, vnMes, vnAno);
 ```
 
-Strength-of-rule note: the source presents top-of-rule declaration as the solution and as best practice (“Declare as variáveis no início do código ou da função”), and mid-block declaration as something that can cause errors — not with an explicit compiler-rejection statement. Document it as a strong documented recommendation that avoids a documented failure mode, not as a proven grammar restriction. Scope, lifetime, and visibility semantics are not documented in the inspected material.
+Strength-of-rule note: the source presents top-of-rule declaration as the solution and as best practice ("Declare as variáveis no início do código ou da função"), and mid-block declaration as something that can cause errors — not with an explicit compiler-rejection statement. Document it as a strong documented recommendation that avoids a documented failure mode, not as a proven grammar restriction. Scope, lifetime, and visibility semantics are not documented in the inspected material.
 
 ## Initialization guidance (convention)
 
@@ -222,7 +222,7 @@ Definir Alfa va1; @ Incorrect: not descriptive @
 Definir Numero vnX; @ Incorrect: too generic @
 ```
 
-Convention status: the source says variables “must follow” (devem seguir) the prefix + CamelCase pattern and lists these under rules, but never states a compiler consequence for a missing or mismatched prefix. Treat `va` / `vn` / `vd` as a required-by-standard convention for this project’s generated code, not as a proven language requirement. Do not reject or “fix” otherwise-valid LSP solely for a prefix mismatch when translating source examples.
+Convention status: the source says variables "must follow" (devem seguir) the prefix + CamelCase pattern and lists these under rules, but never states a compiler consequence for a missing or mismatched prefix. Treat `va` / `vn` / `vd` as a required-by-standard convention for this project's generated code, not as a proven language requirement. Do not reject or "fix" otherwise-valid LSP solely for a prefix mismatch when translating source examples.
 
 ## Deliberately not inferred
 
@@ -232,7 +232,7 @@ From the inspected sections, the following are not documented and must not be fi
 - Scope, lifetime, visibility (global vs. local vs. rule vs. function vs. event).
 - Implicit conversions between `Alfa`, `Numero`, and `Data`.
 - Numeric precision, range, or decimal separator behavior.
-- String size semantics beyond “maximum chain length” (no encoding, byte-vs-character, truncation, or overflow behavior documented here).
+- String size semantics beyond "maximum chain length" (no encoding, byte-vs-character, truncation, or overflow behavior documented here).
 - Date representation, range, or time-component behavior.
 - Memory or performance characteristics.
 
@@ -246,4 +246,4 @@ From the inspected sections, the following are not documented and must not be fi
 
 ## Provenance
 
-Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Tipos de Dados Essenciais` (quick-start summary), `Tipo de Dados e Variáveis` (type list, `Definir` syntax, sized `Alfa`, access forms, `Regras`, `Padrão de Nomenclatura`), `Regra #3: Padrão de Nomenclatura`, `Problema: “Variável não definida”`, `Problema #4: Variáveis Não Declaradas`, `Erro #3: Declaração de Variáveis no Meio do Código`, `Referência Rápida — Declaração de Variáveis`, and `Padrões e Boas Práticas` (declaration, initialization, naming). The `Definição de Arrays` section was inspected only to record the bracket-syntax conflict. Portuguese explanatory prose was translated into English; LSP keywords, identifiers, literals, and code examples were preserved unchanged. Senior Sistemas is the authoritative source for official behavior.
+Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Tipos de Dados Essenciais` (quick-start summary), `Tipo de Dados e Variáveis` (type list, `Definir` syntax, sized `Alfa`, access forms, `Regras`, `Padrão de Nomenclatura`), `Regra #3: Padrão de Nomenclatura`, `Problema: "Variável não definida"`, `Problema #4: Variáveis Não Declaradas`, `Erro #3: Declaração de Variáveis no Meio do Código`, `Referência Rápida — Declaração de Variáveis`, and `Padrões e Boas Práticas` (declaration, initialization, naming). The `Definição de Arrays` section was inspected only to record the bracket-syntax conflict. Portuguese explanatory prose was translated into English; LSP keywords, identifiers, literals, and code examples were preserved unchanged. Senior Sistemas is the authoritative source for official behavior.

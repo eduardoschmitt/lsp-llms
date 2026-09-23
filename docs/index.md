@@ -16,7 +16,7 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 
 ## Functions
 
-- [String functions](functions/strings.md) — available. Concatenation, extraction, measurement, search, substitution, insertion, deletion, whitespace, case, accent/special-character, line-splitting, delimited lists, ASCII and encoding conversion, math on `Alfa`. Conversions (`IntParaAlfa`, `AlfaParaInt`, …) deferred to a future conversion slice.
+- [String functions](functions/strings.md) — available. Concatenation, extraction, measurement, search, substitution, insertion, deletion, whitespace, case, accent/special-character, line-splitting, delimited lists, ASCII and encoding conversion, math on `Alfa`. Conversions (`IntParaAlfa`, `AlfaParaInt`, …) documented in `functions/conversion.md`.
 - [Date and time functions](functions/dates-time.md) — available. Current date/time, construction, decomposition, formatting, demonstrated arithmetic and comparison, weekday/business-day functions. Includes recorded conflicts (output types, literals, masks).
 - [Type conversion functions](functions/conversion.md) — available. Evidence-only conversion matrix, Alfa/Numero/Data/masked/hour-minute conversions, observed-only date helpers, failure catalog. Intuitive names (`NumeroParaAlfa`, `AlfaParaNumero`) confirmed absent.
 - [Numeric and math functions](functions/numeric-math.md) — available. Operators subset, truncation, rounding (ABNT as stated), Delphi-style formatting, value-to-words, unit multiplication/conversion, division helpers. Name-variant conflicts preserved.
@@ -46,7 +46,7 @@ The following domains exist in the source but have no structured file in this re
 - Validation and security functions (string, date, conversion, numeric, and database functions are done)
 - Rule lists (core `ListaRegra` in collections; full catalog deferred)
 - Report Generator functions
-- Files, Web Service, and HTTP integration (file operations, JSON, and HTTP/web-services are done)
+- Files and HTTP/Web-Service integration (file operations and HTTP/web-services are done)
 - User interface (`Mensagem`, `EntradaValor`, `Cancel`)
 - System variables and execution contexts
 - Worked examples, patterns, and remaining troubleshooting (beyond the guardrail subset in the limitations guide)
@@ -54,3 +54,14 @@ The following domains exist in the source but have no structured file in this re
 ## Source
 
 Primary source is the community repository `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao` (single large `README.md` plus `exemplos/*.lsp`). Senior Sistemas is the authoritative source for official behavior.
+
+## Evidence vocabulary
+
+How this corpus marks the status of a claim:
+
+- **Source-faithful** — full example or statement reproduced from the source (only explanatory comments translated).
+- **Excerpt** — contiguous subset of a source example; surrounding lines omitted without alteration.
+- **Demonstrated** — behavior shown in working source examples but never stated as a general rule.
+- **Observed-only** — call shape seen in examples with no prose specification; direction and semantics unknown.
+- **Project guidance** — conservative generation advice from this project, not compiler semantics.
+- **Conflict / uncertainty** — source passages disagree or evidence is insufficient; preserved, never silently resolved.

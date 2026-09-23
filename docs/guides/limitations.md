@@ -10,7 +10,7 @@ Scope of this file: only limitations and pitfalls needed to generate valid calls
 
 Classification: **Documented limitation**.
 
-What the source says: most LSP functions do not return values directly; they fill a variable passed as a return (output) parameter. The executive summary phrases it as “use a return variable, not `=`”.
+What the source says: most LSP functions do not return values directly; they fill a variable passed as a return (output) parameter. The executive summary phrases it as "use a return variable, not `=`".
 
 Do not generate (source-faithful incorrect forms):
 
@@ -50,7 +50,7 @@ Functions the source places in the output-parameter family (summary table, prese
 | Conversion | `AlfaParaDecimal`, `AlfaParaInt`, `AlfaParaData`, `IntParaAlfa` |
 | Dynamic handling | `PegarTipoVar`, `PegarValorVarAlf`, `PegarValorVarNum` |
 
-Uncertainty: the table is a “Resumo”, and the rule says “most” (a maioria) functions. Membership of any function not listed above is not established by this file; check the function catalog when it exists.
+Uncertainty: the table is a "Resumo", and the rule says "most" (a maioria) functions. Membership of any function not listed above is not established by this file; check the per-domain function pages (`../functions/`, `../database/`).
 
 ## L2 — Direct-return exceptions exist; do not generalize either direction
 
@@ -71,7 +71,7 @@ vnTem = Lst.Proximo();
 
 `Truncar` is a further direct-return case documented in the troubleshooting section (see L8): `vnParteInteira = Truncar(vnDataHora);` is marked correct while the two-argument form is marked incorrect — even though `Truncar` does not appear in the summary table of L1.
 
-Guidance: treat each function individually. The L1 pattern is the default; only the functions listed here (plus `Truncar`) have source backing for `variable = Function(...)` form in the inspected material. In particular, `Mensagem` returns a value (button index; see L4) but its *input* parameters still obey L3 — do not confuse the two directions.
+Guidance: treat each function individually. The L1 pattern is the default; only the functions listed here (plus `Truncar`) have source backing for `variable = Function(...)` form in the inspected material. In particular, `Mensagem` returns a value (button index; see L5) but its *input* parameters still obey L3 — do not confuse the two directions.
 
 ## L3 — No manipulation inside function parameters; prepare values first
 
@@ -143,7 +143,7 @@ vaMensagem = "Total: " + vaTotalStr;
 Mensagem(Retorna, vaMensagem);
 ```
 
-Conflict note: one introductory example passes concatenation directly to `HttpGet` — `HttpGet(vaHTTP, "https://viacep.com.br/ws/" + vaCEP + "/json/", vaResposta);` — inside a section of presented-as-working examples. That contradicts the absolute “does not support” wording above. Until resolved against official Senior documentation, follow the safe pattern (build the URL in a variable first, as the dedicated CEP/HTTP examples do with `vaURL`) and treat the absolute scope (“every function”) as uncertain. The rule is at minimum solid for `Mensagem`, `TamanhoAlfa`, and `SubstAlfa`, which have explicit incorrect/correct pairs.
+Conflict note: one introductory example passes concatenation directly to `HttpGet` — `HttpGet(vaHTTP, "https://viacep.com.br/ws/" + vaCEP + "/json/", vaResposta);` — inside a section of presented-as-working examples. That contradicts the absolute "does not support" wording above. Until resolved against official Senior documentation, follow the safe pattern (build the URL in a variable first, as the dedicated CEP/HTTP examples do with `vaURL`) and treat the absolute scope ("every function") as uncertain. The rule is at minimum solid for `Mensagem`, `TamanhoAlfa`, and `SubstAlfa`, which have explicit incorrect/correct pairs.
 
 ## L4 — Do not call output-parameter functions inside conditions
 
@@ -198,7 +198,7 @@ Guidance: always use the call-first pattern; it is the only form with explicit c
 
 Classification: **Documented limitation** (input concatenation ban and large-payload ban); **Language behavior** (button-index return, message types).
 
-Input rules (source-backed “Regras Importantes” + “FUNDAMENTAL”):
+Input rules (source-backed "Regras Importantes" + "FUNDAMENTAL"):
 
 1. No concatenation or any manipulation directly in `Mensagem()` parameters.
 2. Build the text in an `Alfa` variable first, then pass that variable.
@@ -257,7 +257,7 @@ vaMensagem = "JSON início: " + vaJSONTrecho + "...";
 Mensagem(Retorna, vaMensagem);
 ```
 
-Return behavior (documented, input/output distinction matters): with button labels in brackets, `Mensagem` returns the chosen button’s sequence starting at 0 (source-faithful):
+Return behavior (documented, input/output distinction matters): with button labels in brackets, `Mensagem` returns the chosen button's sequence starting at 0 (source-faithful):
 
 ```lsp
 Definir Numero vnRetorno;
@@ -331,7 +331,7 @@ Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
 
 Classification: **Documented limitation**; examples also serve as **Common error / troubleshooting observation**.
 
-Concatenation (source “REGRA CRÍTICA”: only `Alfa` variables can be concatenated):
+Concatenation (source "REGRA CRÍTICA": only `Alfa` variables can be concatenated):
 
 ```lsp
 @ Incorrect - CONCATENATION ERROR @
@@ -398,7 +398,7 @@ No direct date literal (source-faithful):
 vdData = 15/08/1990;
 ```
 
-Solution per the source: use `MontaData()` or `CodData()` (signatures belong to the dates slice; the variables file records the `MontaData` assignment rule).
+Solution per the source: use `MontaData()` or `CodData()` (signatures are documented in `../functions/dates-time.md`; the variables file records the `MontaData` assignment rule).
 
 `FormatarData` accepts only `Numero`, not `Data` (source-faithful):
 
@@ -427,7 +427,7 @@ against many `Data`-typed `DataHoje(vdData…)` examples and the guide table (wh
 
 ## L10 — Non-existent constructs from other languages
 
-Classification: **Documented limitation** (each item explicitly “does not exist” in the source).
+Classification: **Documented limitation** (each item explicitly "does not exist" in the source).
 
 `Chr()` does not exist in LSP (source-faithful):
 
@@ -436,7 +436,7 @@ Classification: **Documented limitation** (each item explicitly “does not exis
 vaStrProcura = "Primeira linha" + Chr(13) + Chr(10) + "Segunda linha";
 ```
 
-Named alternative (no signature documented in the inspected sections; belongs to the function catalog):
+Named alternative (no signature documented in the inspected sections; documented in `../functions/strings.md`):
 
 ```lsp
 @ Correct @
@@ -453,7 +453,7 @@ Mensagem(Erro, "Dado inválido");
 Retorna;
 ```
 
-Documented pattern — interrupt with `Cancel(1)` (flow-interruption semantics belong to control flow; the call form is recorded here only as the named replacement):
+Documented pattern — interrupt with `Cancel(1)` (flow-interruption semantics are documented in `../language/control-flow.md`; the call form is recorded here only as the named replacement):
 
 ```lsp
 @ Correct use - CORRECT PATTERN @
@@ -469,8 +469,8 @@ Classification: **Language behavior** (report-generator contexts); **Documented 
 
 Source statements:
 
-- In screen-event rules, `Cancel(n)` only cancels the rule’s execution regardless of the passed value; to raise an error, use `Mensagem(Erro, "mensagem")` (or system-code handling of the `Cancel(n)` return).
-- In the Report Generator: `Cancel(1)` cancels the rule and the control’s printing; in `Definição\Seleção` and `Detalhe\Antes_de_Imprimir` it excludes the current detail record; in `Definição\Pré-Seleção` it cancels the whole report. `Cancel(2)` prints the `ValStr` content in description-type controls then exits the rule. `Cancel(3)` is only for formula-type controls (formula ordering), excluding the current record.
+- In screen-event rules, `Cancel(n)` only cancels the rule's execution regardless of the passed value; to raise an error, use `Mensagem(Erro, "mensagem")` (or system-code handling of the `Cancel(n)` return).
+- In the Report Generator: `Cancel(1)` cancels the rule and the control's printing; in `Definição\Seleção` and `Detalhe\Antes_de_Imprimir` it excludes the current detail record; in `Definição\Pré-Seleção` it cancels the whole report. `Cancel(2)` prints the `ValStr` content in description-type controls then exits the rule. `Cancel(3)` is only for formula-type controls (formula ordering), excluding the current record.
 
 Source-faithful call forms:
 
@@ -486,7 +486,7 @@ Scope note: `ValStr`/`ValRet` mechanics and event semantics belong to later slic
 
 Classification: **Community guidance** + **Common error / troubleshooting observation**.
 
-Declaring inside a conditional block, or not declaring at all, is the documented cause of “Variável não definida” / “may cause errors”. Full incorrect/correct pairs live in `../language/variables.md` (Declaration placement); follow that file’s call-first, declare-at-top pattern when generating code. Not repeated here to avoid a second maintained copy.
+Declaring inside a conditional block, or not declaring at all, is the documented cause of "Variável não definida" / "may cause errors". Full incorrect/correct pairs live in `../language/variables.md` (Declaration placement); follow that file's call-first, declare-at-top pattern when generating code. Not repeated here to avoid a second maintained copy.
 
 ## Provenance
 

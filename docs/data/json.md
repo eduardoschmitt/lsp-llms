@@ -6,7 +6,7 @@ Scope: how JSON text is held (`Alfa`), read field-by-field (`ValorElementoJson`)
 
 ## Representation
 
-Every JSON payload in the source is an `Alfa` variable: assigned literals with `\"` escapes, HTTP response variables, and file-read accumulations alike. Processed form is either more `Alfa` variables (one extracted value each) or a rule-list identifier (`Numero`) walked with `ListaRegraPrimeiro`/`Proximo`/`ObterValor*` (see `collections.md` for that API). No JSON object, array, or value type exists on the LSP side.
+All JSON payloads encountered in the inspected source are held in `Alfa` variables: assigned literals with `\"` escapes, HTTP response variables, and file-read accumulations alike. Processed form is either more `Alfa` variables (one extracted value each) or a rule-list identifier (`Numero`) walked with `ListaRegraPrimeiro`/`Proximo`/`ObterValor*` (see `collections.md` for that API). No JSON object, array, or value type exists on the LSP side.
 
 ## Approach 1 — ValorElementoJson (single fields)
 
@@ -127,7 +127,7 @@ Escaping follows the string rules in `syntax.md` (backslash before `"` and `\`).
 ## File and HTTP boundaries
 
 - Files: the JSON-loading example accumulates text with `Abrir(vaArquivo, "LerNL");` + `Enquanto (LerNL(vnArquivo, vaLinha) = 1)` (see `io/files.md`: `LerNL` is observed-only). No encoding is ever stated.
-- HTTP: ViaCEP/reqres examples feed response variables straight into the three approaches (see the future HTTP slice for transport). Response-size caution from limitations (large payloads into `Mensagem`) applies to JSON responses as well.
+- HTTP: ViaCEP/reqres examples feed response variables straight into the three approaches (see `../integration/http-webservices.md` for transport). Response-size caution from limitations (large payloads into `Mensagem`) applies to JSON responses as well.
 - `ConverteTexto` (`"JSON"` codes) converts character escapes, not data structures — owned by `strings.md`, not a JSON API.
 
 ## Conservative project guidance
@@ -143,7 +143,7 @@ All guidance is project caution unless independently backed above.
 - Full `ListaRegra*` catalog beyond JSON loading/reading: future rule-list/Senior slice.
 - `ConverteTexto`, `PosicaoAlfa`, `LerPosicaoAlfa`, `CopiarAlfa`, `SubstAlfa`: strings slice owns them.
 - `LerNL`, `Abrir` modes, temp files: I/O slice owns them.
-- `HttpGet`/`HttpObjeto`/status/headers/auth: future HTTP slice.
+- `HttpGet`/`HttpObjeto`/status/headers/auth: documented in `../integration/http-webservices.md`.
 - `Mensagem`-payload limits: limitations slice owns them.
 
 ## Conflicts and uncertainty on this page

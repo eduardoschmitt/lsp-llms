@@ -428,7 +428,7 @@ ConverteUnidadeMedida("", "", "KM", "M", 100, 0, 3, 0, vnQtdConv);
 @ vnQtdConv will be 100000 (100 km = 100000 metros) @
 ```
 
-Classification note: product, supplier, and company parameters are Senior-ecosystem identifiers whose business semantics belong to a future Senior domain; the function is documented here because its primary purpose is unit-quantity conversion and no Senior domain exists yet. Conversion factors, supported units, and rounding are undocumented — only the demonstrated KMtoM case is evidenced.
+Classification note: product, supplier, and company parameters are Senior-ecosystem identifiers whose business semantics belong to a future Senior domain; the function is documented here because its primary purpose is unit-quantity conversion and no Senior domain exists yet. Conversion factors, supported units, and rounding are undocumented — only the demonstrated KM-to-M case is evidenced.
 
 ## Deferred (inspected, not this domain)
 

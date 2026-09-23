@@ -94,7 +94,7 @@ Se ((vnIdade >= 18) e (vnIdade <= 65) e (vaCategoria = "PREMIUM") e (vnRenda > 3
 
 Classification: language syntax plus illustrative examples. Whether `Senao Se` is a distinct chained construct or plain nesting is not stated — only the demonstrated shape is documented.
 
-Condition-content conflict: the source both forbids output-parameter function calls directly inside conditions and shows that shape in presented-as-working examples. This conflict is preserved in `../guides/limitations.md` (L4) and is not resolved here. Generate conditions with plain variables and comparisons.
+Condition-content conflict: the source both forbids output-parameter function calls directly inside conditions and shows that shape in presented-as-working examples. This conflict is preserved in `../guides/limitations.md` (L4) and is not resolved here. Project guidance: generate conditions with plain variables and comparisons.
 
 ## Loops
 
@@ -137,7 +137,7 @@ Deliberately not documented (do not infer):
 - When or how the counter updates relative to the condition test and the body.
 - Loop-variable declaration, scope, or lifetime. One example uses a bare `i` with no `Definir` and no `va`/`vn`/`vd` prefix — see conflicts below.
 
-Uncertainty: the reserved-words table writes the syntax with a trailing semicolon after the closing parenthesis (`Para (...);`), while every `Para` example omits it (`Para (...) {`). Follow the examples; the table’s semicolon reads as sentence punctuation, but the source never clarifies this.
+Uncertainty: the reserved-words table writes the syntax with a trailing semicolon after the closing parenthesis (`Para (...);`), while every `Para` example omits it (`Para (...) {`). Follow the examples; the table's semicolon reads as sentence punctuation, but the source never clarifies this.
 
 ### Enquanto
 
@@ -163,7 +163,7 @@ Enquanto (vnContador < 10) {
 }
 ```
 
-Established: the block repeats while the condition holds; the examples advance a counter variable manually inside the body. Truthiness rules, evaluation timing, and any maximum iteration behavior are not documented. The infinite-loop troubleshooting (`Enquanto (vnContador > 0)` without updating the control variable vs. a bounded, incremented form) is preserved in the limitations slice’s error catalog and stays there.
+Established: the block repeats while the condition holds; the examples advance a counter variable manually inside the body. Truthiness rules, evaluation timing, and any maximum iteration behavior are not documented. The infinite-loop troubleshooting (`Enquanto (vnContador > 0)` without updating the control variable vs. a bounded, incremented form) is preserved in the limitations slice's error catalog and stays there.
 
 ## Loop control
 
@@ -245,7 +245,7 @@ Funcao exemploControleFluxo(); {
 
 Source summary (community guidance): to interrupt loops use `Pare;`; to interrupt functions, error handling, and validations use `Cancel(1);` — never `Pare;` outside loops, and always `Cancel(1);` after error messages. Full `Cancel(n)` contexts live in `../guides/limitations.md` (L11).
 
-Comparative note (analogy, not equivalence): `Pare` resembles `break` in other languages only in that it exits the repetition block. The source establishes neither labeled breaks, nor multi-level exits, nor any value-returning behavior. A community loop example comments that `Pare` stops “only the inner loop” in nested `Enquanto` loops — treat that as illustrative example behavior, not a normative nested-loop rule.
+Comparative note (analogy, not equivalence): `Pare` resembles `break` in other languages only in that it exits the repetition block. The source establishes neither labeled breaks, nor multi-level exits, nor any value-returning behavior. A community loop example comments that `Pare` stops "only the inner loop" in nested `Enquanto` loops — treat that as illustrative example behavior, not a normative nested-loop rule.
 
 Standalone loop-exit example (source-faithful):
 
@@ -268,7 +268,7 @@ What is established: the keyword exists, is written `Continue;`, and skips to fu
 
 What is not established: everything else. There is no prose example in the main documentation, no stated interaction with the `Para` counter, and no stated behavior for nested loops.
 
-Documentation conflict: the table scopes `Continue` to `Para` loops, but the community example `exemplos/ExemploControleLoop.lsp` uses `Continue;` six times inside `Enquanto` loops (selective processing, nested-matrix skips), with manual counter increments placed before each `Continue`. Example-level evidence therefore contradicts the `Para`-only scoping. Until resolved against official Senior documentation, use `Continue` only in `Para` loops (the sole normatively scoped context) and treat the `Enquanto` usage as unverified community-example behavior. The example’s remark that controls “affect only the current loop” is likewise illustrative, not normative.
+Documentation conflict: the table scopes `Continue` to `Para` loops, but the community example `exemplos/ExemploControleLoop.lsp` uses `Continue;` six times inside `Enquanto` loops (selective processing, nested-matrix skips), with manual counter increments placed before each `Continue`. Example-level evidence therefore contradicts the `Para`-only scoping. Until resolved against official Senior documentation, use `Continue` only in `Para` loops (the sole normatively scoped context) and treat the `Enquanto` usage as unverified community-example behavior. The example's remark that controls "affect only the current loop" is likewise illustrative, not normative.
 
 ## Explicit jumps
 
@@ -303,7 +303,7 @@ Mensagem(Retorna, "Menor de idade");
 fim:
 ```
 
-Deliberately not documented: label naming rules, forward/backward jump permissions, jumping into or out of blocks, loops, or functions, interaction with variable state, and any warning for or against use. The tableʼs parenthetical “(Goto)” is a naming gloss, not a grant of conventional `goto` semantics. Do not infer any of the above.
+Deliberately not documented: label naming rules, forward/backward jump permissions, jumping into or out of blocks, loops, or functions, interaction with variable state, and any warning for or against use. The tableʼs parenthetical "(Goto)" is a naming gloss, not a grant of conventional `goto` semantics. Do not infer any of the above.
 
 ## Cancel (minimum context)
 

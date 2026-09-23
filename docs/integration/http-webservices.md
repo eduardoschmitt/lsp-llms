@@ -342,7 +342,7 @@ All guidance is project caution unless independently backed above.
 
 ## Deliberately not documented
 
-Redirect internals, retry/backoff, connection pooling/timeout internals, DNS, URL \%-encoding, certificate validation, protocol versions, proxy auth flows, cookie security, JWT structure, SOAP/WSDL mechanics, server-side behavior, and any REST semantics beyond the verb table.
+Redirect internals, retry/backoff, connection pooling/timeout internals, DNS, URL %-encoding, certificate validation, protocol versions, proxy auth flows, cookie security, JWT structure, SOAP/WSDL mechanics, server-side behavior, and any REST semantics beyond the verb table.
 
 ## Provenance
 

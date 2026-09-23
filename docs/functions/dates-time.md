@@ -45,7 +45,7 @@ Definir Numero xHoje;
 DataHoje(xHoje);
 ```
 
-(A quick-reference card writes `DataHoje(data)` with a generic lowercase placeholder, which is not type evidence.) Whether `DataHoje` can fill a `Numero` is unresolved: about seventeen `Data`-typed usages against two `Numero`-typed ones. Follow the `Data` form.
+(A quick-reference card writes `DataHoje(data)` with a generic lowercase placeholder, which is not type evidence.) Whether `DataHoje` can fill a `Numero` is unresolved: about seventeen `Data`-typed usages against two `Numero`-typed ones. Project guidance: follow the `Data` form.
 
 ## DataHora and DataHoraUTC
 
@@ -72,18 +72,18 @@ Documented representation: the integer part is the date (a day count from an uns
 Example (source-faithful excerpt):
 
 ```lsp
-@ 2. Obtém data e hora local (número fracionário) @
+@ 2. Gets the local date and time (fractional number) @
 DataHora(vnDataHoraAtual);
 IntParaAlfa(vnDataHoraAtual, vaNumeroStr);
 
-@ 3. Obtém data e hora UTC (número fracionário) @
+@ 3. Gets the UTC date and time (fractional number) @
 DataHoraUTC(vnDataHoraUTC);
 ```
 
 Time-of-day extraction via `Truncar` (source-faithful excerpt; `Truncar` itself is classified in `../guides/limitations.md`):
 
 ```lsp
-@ Calcular apenas a parte fracionária (horas do dia) @
+@ Calculate only the fractional part (hours of the day) @
 vnSomenteParte = vnDataHoraAtual - Truncar(vnDataHoraAtual);
 vnHoras = vnSomenteParte * 24;
 ```
@@ -91,7 +91,7 @@ vnHoras = vnSomenteParte * 24;
 And (source-faithful excerpt):
 
 ```lsp
-@ Nota: Use conversão para inteiro ou função Truncar @
+@ Note: Use integer conversion or the Truncar function @
 vnParteInteira = Truncar(vnDataHora);
 vnParteFracionaria = vnDataHora - vnParteInteira;
 ```
@@ -115,7 +115,7 @@ Definir Data vdData;
 
 vdData = 31/12/1900;
 ConverteDataBanco(vdData, vaDataStr);
-@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" ou formato do banco usado @
+@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" or the database format used @
 ```
 
 ```lsp
@@ -124,7 +124,7 @@ Definir Data vdData;
 
 vdData = 31/12/1900;
 ConverteDataToDB(vdData, vaDataStr);
-@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" ou formato do banco usado @
+@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" or the database format used @
 ```
 
 ```lsp
@@ -133,10 +133,10 @@ Definir Numero vnBissexto;
 
 vdData = 02/07/2018;
 AnoBissexto(vdData, vnBissexto);
-@ vnBissexto será 0 (não bissexto) @
+@ vnBissexto will be 0 (not a leap year) @
 ```
 
-These are exactly four `Data`-variable assignments of `DD/MM/YYYY`-shaped values in the whole source: one labeled incorrect, three embedded without remark in conversion/leap-year examples. Whether `vdData = 31/12/1900;` is a date literal, an arithmetic expression the engine interprets, or simply an error in the examples cannot be established from the available material. Do not generate date literals; use `MontaData` or `CodData`, the only assignment mechanisms with explicit correct examples. The `to_date(...)` output strings are embedded database-dialect content, not LSP semantics.
+These are exactly four `Data`-variable assignments of `DD/MM/YYYY`-shaped values in the whole source: one labeled incorrect, three embedded without remark in conversion/leap-year examples. Whether `vdData = 31/12/1900;` is a date literal, an arithmetic expression the engine interprets, or simply an error in the examples cannot be established from the available material. Project guidance: do not generate date literals; use `MontaData` or `CodData`, the only assignment mechanisms with explicit correct examples. The `to_date(...)` output strings are embedded database-dialect content, not LSP semantics.
 
 ## MontaData
 
@@ -168,7 +168,7 @@ vnMes = 9;
 vnAno = 1998;
 
 MontaData(vnDia, vnMes, vnAno, vdData);
-@ vdData conterá "01/09/1998" @
+@ vdData will contain "01/09/1998" @
 ```
 
 Source observation: when the return variable is numeric it need not be defined with `Definir`; but if used in a cursor it must be defined as `Data`. The quoted result `"01/09/1998"` is a display form, not a claim about internal representation.
@@ -232,7 +232,7 @@ Definir Numero vnAno;
 
 vdDataEmissao = E140NFV.DatEmi;
 DesMontaData(vdDataEmissao, vnDia, vnMes, vnAno);
-@ Se a data fosse 24/04/1995: vnDia=24, vnMes=04, vnAno=1995 @
+@ If the date were 24/04/1995: vnDia=24, vnMes=04, vnAno=1995 @
 ```
 
 `DecodData` has a signature block but no parameter glosses and no dedicated example; it is exercised in validation examples through the same `(data, dia, mes, ano)` shape. Do not treat the two as interchangeable on semantic grounds — the source never says that — but no behavioral difference is documented either.
@@ -267,7 +267,7 @@ Definir Data vdData;
 
 vdData = 31/12/1900;
 ConverteDataBanco(vdData, vaDataStr);
-@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" ou formato do banco usado @
+@ vaDataStr = "to_date('31/12/1900','DD/MM/YYYY')" or the database format used @
 ```
 
 ```lsp
@@ -302,7 +302,7 @@ Definir Numero vnBissexto;
 
 vdData = 02/07/2018;
 AnoBissexto(vdData, vnBissexto);
-@ vnBissexto será 0 (não bissexto) @
+@ vnBissexto will be 0 (not a leap year) @
 ```
 
 No calendar rules beyond this mapping are documented.
@@ -323,7 +323,7 @@ Parameters:
 - `formato` — input. Format mask (`Alfa`).
 - `dataFormatada` — output. `Alfa` variable receiving the formatted date.
 
-Type restriction: `FormatarData` accepts only `Numero` (from `DataHora`), not `Data`. The incorrect/correct pair (source-faithful):
+Type restriction: `FormatarData` accepts only `Numero` (from `DataHora`), not `Data`. Destination identifiers differ between source examples (`vaData` in one troubleshooting pair, `vaFormatada` in another) — the name is the example's own variable and carries no API meaning. The incorrect/correct pair (source-faithful):
 
 ```lsp
 @ Incorrect: FormatarData does NOT accept the Data type @
@@ -371,7 +371,7 @@ Documentation conflicts:
 1. The section demands lowercase masks (`yyyy`, `dd`; "NEVER use capitals") while simultaneously documenting uppercase `MM`, `HH`. The contradiction is internal and unresolved; copy masks exactly as shown.
 2. The intro calls the input "milliseconds generated by DataHora" while every other passage says fractional days. Unresolved; the fractional account has the examples behind it.
 3. A quick-reference card shows a 2-argument shorthand `FormatarData(data, formato)` against the documented 3-argument signature. Unresolved; use the 3-argument form.
-4. A note adds that `FormatarData` only formats dates, not hours, "para variáveis do tipo Data", pointing at `HorSis` for the current time — consistent with the `Numero`-only restriction in effect, if not in wording.
+4. A note adds that `FormatarData` only formats dates, not hours, "for Data-type variables", pointing at `HorSis` for the current time — consistent with the `Numero`-only restriction in effect, if not in wording.
 
 ## ExtensoMes, ExtensoSemana, DataExtenso
 
@@ -398,7 +398,7 @@ Definir Data vdData;
 
 DataHoje(vdData);
 ExtensoMes(vdData, vaMesExt);
-@ Se a data fosse 31/12/1900, vaMesExt seria "Dezembro" @
+@ If the date were 31/12/1900, vaMesExt would be "Dezembro" @
 ```
 
 ```lsp
@@ -407,7 +407,7 @@ Definir Data vdData;
 
 DataHoje(vdData);
 ExtensoSemana(vdData, vaSemExt);
-@ Se a data fosse 31/12/1900, vaSemExt seria "Sexta-Feira" @
+@ If the date were 31/12/1900, vaSemExt would be "Sexta-Feira" @
 ```
 
 ```lsp
@@ -416,7 +416,7 @@ Definir Alfa vaExtenso;
 
 vdData = E210MVP.DatMov;
 DataExtenso(vdData, vaExtenso);
-@ vaExtenso vai conter a data por extenso @
+@ vaExtenso will contain the full date in words @
 ```
 
 The "Se a data fosse…" comments are hypothetical illustrations, not executed assertions. No weekday-numbering or month-name tables beyond these examples are documented here (`RetDiaSemana` below gives the numeric mapping).
@@ -441,10 +441,10 @@ Documented mapping: 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thur
 Example (source-faithful excerpt):
 
 ```lsp
-@ Obtém a data atual do sistema @
+@ Gets the current system date @
 vnDataSis = DatSis;
 
-@ Retorna o dia da semana @
+@ Returns the day of the week @
 RetDiaSemana(vnDataSis, vnDiaSemana);
 ```
 
@@ -470,16 +470,16 @@ Parameters:
 Example (source-faithful excerpt):
 
 ```lsp
-@ Exemplo com data de Natal (25/12/2024) @
+@ Example with Christmas date (25/12/2024) @
 vaDataAlf = "25/12/2024";
 ConvDataInt(vaDataAlf, vnData);
 vnCEP = 89107000;
 
-@ Verifica dias úteis anteriores e posteriores @
+@ Checks previous and following business days @
 RetDiaUtilAntPos(vnData, vnCEP, vnDataAnt, vnDataPos);
 ```
 
-`ConvDataInt`/`ConvDataExt` (Alfa-to-number and number-to-Alfa date helpers) have no dedicated sections; their shapes are only demonstrated here and under `UltimoDia`. Do not document them as specified functions. No rule is given for how weekends, holidays, or the postal code affect the result — do not infer one.
+`ConvDataInt`/`ConvDataExt` (Alfa-to-number and number-to-Alfa date helpers) have no dedicated sections; their shapes are only demonstrated here and under `UltimoDia`. Do not document them as specified functions (see also `conversion.md`, which preserves the same observed-only classification). No rule is given for how weekends, holidays, or the postal code affect the result — do not infer one.
 
 ## RetornarDiasUteisMes, RetornarDiasUteisPeriodo, RetornarQtdDiasAno
 
@@ -500,33 +500,33 @@ RetornarQtdDiasAno(<aData>, <aTipoAno>, <aQtdDiasAno>);
 Examples (source-faithful excerpts):
 
 ```lsp
-@ Define uma data de exemplo (21/07/2024) @
+@ Defines an example date (21/07/2024) @
 vdDataBase = CodData(21, 7, 2024);
 
-@ Obtém quantidade de dias úteis do mês inteiro @
+@ Gets the full month's business-day count @
 RetornarDiasUteisMes(vdDataBase, 0, vnQtdDiasUteisTotal);
 
-@ Obtém quantidade de dias úteis até a data base @
+@ Gets the business-day count through the base date @
 RetornarDiasUteisMes(vdDataBase, 1, vnQtdDiasUteisAteData);
 ```
 
 ```lsp
-@ Define período de exemplo (21/06/2024 a 18/08/2024) @
+@ Defines an example period (21/06/2024 to 18/08/2024) @
 vdDataInicial = CodData(21, 6, 2024);
 vdDataFinal = CodData(18, 8, 2024);
 
-@ Calcula quantidade de dias úteis no período @
+@ Calculates the period's business-day count @
 RetornarDiasUteisPeriodo(vdDataInicial, vdDataFinal, vnQtdDiasUteis);
 ```
 
 ```lsp
-@ Define uma data de exemplo (02/07/2024) @
+@ Defines an example date (02/07/2024) @
 vdData = CodData(2, 7, 2024);
 
-@ Obtém quantidade de dias para cada tipo de ano @
-  RetornarQtdDiasAno(vdData, 0, vnDiasUtil);       @ Ano útil @
-  RetornarQtdDiasAno(vdData, 1, vnDiasComercial);  @ Ano comercial @
-  RetornarQtdDiasAno(vdData, 2, vnDiasCivil);      @ Ano civil @
+@ Gets the day count for each year type @
+  RetornarQtdDiasAno(vdData, 0, vnDiasUtil);       @ Business year @
+  RetornarQtdDiasAno(vdData, 1, vnDiasComercial);  @ Commercial year @
+  RetornarQtdDiasAno(vdData, 2, vnDiasCivil);      @ Civil year @
 ```
 
 ## UltimoDia
@@ -548,14 +548,14 @@ Documented restriction: it cannot be a system or table field, because the return
 Example (source-faithful excerpt):
 
 ```lsp
-@ Define uma data de exemplo (20/12/2024) @
+@ Defines an example date (20/12/2024) @
 vaDataOriginal = "20/12/2024";
 ConvDataInt(vaDataOriginal, vnData);
 
-@ Aplica a função UltimoDia @
+@ Applies the UltimoDia function @
 UltimoDia(vnData);
 
-@ Converte o resultado para string @
+@ Converts the result to string @
 ConvDataExt(vnData, vaDataUltimoDia);
 ```
 
@@ -568,18 +568,18 @@ The source states there is no function for computing future or past dates, and a
 Demonstrated patterns (source-faithful excerpts; note the future/past computations are shown inside comments while the conversions are active code):
 
 ```lsp
-@ Para calcular datas futuras, use operação direta @
+@ To compute future dates, use direct operations @
 @ vdDataVencimento = vdDataBase + 30; @
 
-@ Para formatação, converta para número @
+@ For formatting, convert to number @
 Definir Numero vnDataVencimento;
 vnDataVencimento = vdDataVencimento;
 FormatarData(vnDataVencimento, "dd/MM/yyyy", vaDataVencimentoStr);
 
-@ Para calcular datas passadas, use operação direta @
+@ To compute past dates, use direct operations @
 @ vdDataLimite = vdDataBase - 15; @
 
-@ Para formatação, converta para número @
+@ For formatting, convert to number @
 Definir Numero vnDataLimite;
 vnDataLimite = vdDataLimite;
 FormatarData(vnDataLimite, "dd/MM/yyyy", vaDataLimiteStr);
@@ -594,14 +594,14 @@ Classification: the `Data ± days` shape is advised prose with commented illustr
 `Data` variables are compared with relational operators in executed example code (source-faithful excerpt):
 
 ```lsp
-@ 3. Verifica se a data é válida (não futura) @
+@ 3. Checks whether the date is valid (not future) @
 Se (vdDataNascimento > vdDataAtual) {
   Mensagem(Erro, "Data de nascimento não pode ser futura!");
 }
 ```
 
 ```lsp
-@ 2. Validações @
+@ 2. Validations @
 Se (vdDataInicio > vdDataFim) {
   Mensagem(Erro, "Data inicial não pode ser maior que a final!");
 } Senao Se (vdDataFim < vdDataAtual) {
@@ -620,14 +620,14 @@ Classification: demonstrated valid syntax in working validation examples. This s
 ## Related but out of scope
 
 - `HorSis` (system time variable, demonstrated as `Alfa` `"HH:MM:SS"` text manipulated with `CopiarAlfa`) and `DatSis` (system date): system-variable domain owns their semantics; behaviors here use them only as demonstrated inputs.
-- `AlfaParaData`: conversion slice (already deferred); referenced by the date-assignment rule, not documented here.
+- `AlfaParaData`: documented in `conversion.md`; referenced by the date-assignment rule, not documented here.
 - `Truncar`: classified in `../guides/limitations.md`; used here only as demonstrated in fractional-date splitting.
-- `IntParaAlfa` / `DecimalParaAlfa`: conversion slice; appear in date examples only as display helpers.
-- `HoraParaMinuto`: numeric minutes conversion — belongs to the future numbers domain despite the time flavor.
-- `Extenso`, `ExtensoMoeda` (value-to-words with currency): numeric/monetary domain despite sitting among date sections.
-- `MultiplicaValor`, `ConverteUnidadeMedida`, `Arredonda`, `ArredondaABNT`, `ArredondarValor`, `Arredonda Valor Tipo Acerto`: numeric operations under a misplaced heading; not date functions.
-- `Formatar`, `FormatarN`: Delphi-style number formatting; numbers domain.
-- `ConvDataInt`, `ConvDataExt`: Alfa-to-number and number-to-Alfa date helpers with no dedicated sections — observed usage only (`ConvDataInt(vaDataAlf, vnData)` / `ConvDataExt(vnData, vaDataStr)`); not specified functions. A future conversion slice may adopt them on finding dedicated evidence.
+- `IntParaAlfa` / `DecimalParaAlfa`: documented in `conversion.md`; appear in date examples only as display helpers.
+- `HoraParaMinuto`: numeric minutes conversion — documented in `conversion.md`.
+- `Extenso`, `ExtensoMoeda` (value-to-words with currency): documented in `numeric-math.md` despite sitting among date sections in the source.
+- `MultiplicaValor`, `ConverteUnidadeMedida`, `Arredonda`, `ArredondaABNT`, `ArredondarValor`, `Arredonda Valor Tipo Acerto`: numeric operations under a misplaced heading documented in `numeric-math.md`; not date functions.
+- `Formatar`, `FormatarN`: Delphi-style number formatting documented in `numeric-math.md`; numbers domain.
+- `ConvDataInt`, `ConvDataExt`: Alfa-to-number and number-to-Alfa date helpers with no dedicated sections — observed usage only (`ConvDataInt(vaDataAlf, vnData)` / `ConvDataExt(vnData, vaDataStr)`); not specified functions. `conversion.md` preserves the same observed-only classification; no dedicated evidence has been found.
 - `DataInicialFinal` (report-generator function using `DataHoje(xHoje)` with a `Numero` variable): report domain; noted here only as the second `DataHoje`-with-`Numero` witness.
 
 ## Conflicts and uncertainty on this page

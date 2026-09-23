@@ -8,7 +8,7 @@ Scope: functions whose primary documented purpose is string/text manipulation: c
 
 Purpose: join `Alfa` values with `+`.
 
-Documented rule: only `Alfa`-type variables (and string literals joined with `Alfa`) may be concatenated. `Numero` values must first be converted (for example with `IntParaAlfa` or `DecimalParaAlfa`, documented in the future conversion slice).
+Documented rule: only `Alfa`-type variables (and string literals joined with `Alfa`) may be concatenated. `Numero` values must first be converted (for example with `IntParaAlfa` or `DecimalParaAlfa`, documented in `conversion.md`).
 
 Correct (source-faithful):
 
@@ -156,7 +156,7 @@ CopiarAlfa(exemplo, 12, 3);
 @ After the call, the "exemplo" variable content would be "emp" @
 ```
 
-Return behavior: in-place side effect on the first variable; no separate output variable and no direct return. Because the source is destructive, copy the value to another variable first when the original must be kept. No `= CopiarAlfa(...)` usage exists anywhere in the source.
+Return behavior: in-place side effect on the first variable; no separate output variable and no direct return. Project guidance: because the source is destructive, copy the value to another variable first when the original must be kept. No `= CopiarAlfa(...)` usage exists anywhere in the source.
 
 Source notes: `CopiarStr` is documented only as a paired signature with no separate parameters, examples, or stated difference. Indexing is 1-based per the parameter description.
 
@@ -304,7 +304,7 @@ TrocaString(vaMensagemFinal, "__EMPRESA__", vaEmpresa);
 @ vaMensagemFinal will be "Olá João Silva, bem-vindo à Senior Sistemas!" @
 ```
 
-Return behavior: in-place on the first variable, consistent with all usages (including `TrocaString(vaURL, "__NUMCEP__", vaCepApi);` in a community HTTP example). Parameters are not individually described in the source. No documented distinction from `SubstAlfa` beyond the “more control options” phrase — see conflicts.
+Return behavior: in-place on the first variable, consistent with all usages (including `TrocaString(vaURL, "__NUMCEP__", vaCepApi);` in a community HTTP example). Parameters are not individually described in the source. No documented distinction from `SubstAlfa` beyond the "more control options" phrase — see conflicts.
 
 ## Concatena
 
@@ -347,11 +347,11 @@ Concatena(vaNome, " - ", vaApelido, vaResultado);
 @ vaResultado will be "Pedro Luiz Souza - Pedrão" @
 ```
 
-Return behavior: output parameter. Whether fewer than 3 inputs are allowed is not documented — both examples pass exactly 3 inputs. Demonstrated usage accepts a string literal as an input; the parameter gloss says “Campo/Variável”, so treat literal acceptance as demonstrated, not as a general rule.
+Return behavior: output parameter. Whether fewer than 3 inputs are allowed is not documented — both examples pass exactly 3 inputs. Demonstrated usage accepts a string literal as an input; the parameter gloss says "Campo/Variável", so treat literal acceptance as demonstrated, not as a general rule.
 
 ## ConverteParaMaiusculo and ConverteParaMinusculo
 
-Purpose: convert a variable’s content to uppercase or lowercase.
+Purpose: convert a variable's content to uppercase or lowercase.
 
 Signatures (source-faithful):
 
@@ -452,7 +452,7 @@ InserirAlfa("empresa de ", vaOrigem, 8);
 @ vaOrigem will be "Senior empresa de Sistemas" @
 ```
 
-Source observation (both sections): the origin variable’s content is truncated if its defined size is not respected. No size/overflow mechanics beyond that sentence are documented. No stated difference between the `Alfa` and `Str` variants.
+Source observation (both sections): the origin variable's content is truncated if its defined size is not respected. No size/overflow mechanics beyond that sentence are documented. No stated difference between the `Alfa` and `Str` variants.
 
 ## LimpaEspacos, LimpaEspacosDireita, LimpaEspacosEsquerda
 
@@ -491,7 +491,7 @@ LimpaEspacosEsquerda(vaTexto);
 @ vaTexto will be "texto com espaços  " @
 ```
 
-Return behavior: in-place on the single variable; no parameter glosses, no direct-return form, no documented definition of “blank space” beyond the examples. The source demonstrates variables only, not literals, in the argument position.
+Return behavior: in-place on the single variable; no parameter glosses, no direct-return form, no documented definition of "blank space" beyond the examples. The source demonstrates variables only, not literals, in the argument position.
 
 ## QuebraTexto
 
@@ -543,8 +543,8 @@ ProcuraEnter(<strProcura>, <strImp>, <strResto>);
 Parameters:
 
 - `strProcura` — input. String in which the enter/newline is searched.
-- `strImp` — output (marked “retorno”). First part of the string, up to the first newline character.
-- `strResto` — output (marked “retorno”). Remainder after the first newline character.
+- `strImp` — output (marked "retorno"). First part of the string, up to the first newline character.
+- `strResto` — output (marked "retorno"). Remainder after the first newline character.
 
 Example (source-faithful):
 
@@ -639,7 +639,7 @@ Source observations: the function returns the ASCII code, not the character — 
 
 ## ListaItem and ListaQuantidade
 
-Purpose: split and count delimited (concatenated-list) strings. These operate on plain `Alfa` text and are distinct from the `ListaRegra*` rule-list API (future database/rule-list domain).
+Purpose: split and count delimited (concatenated-list) strings. These operate on plain `Alfa` text and are distinct from the `ListaRegra*` rule-list API (documented in `../language/collections.md`; full catalog deferred).
 
 `ListaItem` signature (source-faithful):
 
@@ -802,7 +802,7 @@ vaMensagem = "Telefone original: " + vaTextoOriginal + " | Apenas números: " + 
 Mensagem(Retorna, vaMensagem);  @ Result: "4799998888" @
 ```
 
-Return behavior: single-argument in-place modification; no direct return. Accent removal is demonstrated (`"João & Pessoa Ltda."` becomes `"JoaoPessoaLtda"`), and email punctuation is stripped (`"usuario@empresa.com.br"` becomes `"usuarioempresacombr"`). What counts as “special” beyond the examples is not defined — do not generalize.
+Return behavior: single-argument in-place modification; no direct return. Accent removal is demonstrated (`"João & Pessoa Ltda."` becomes `"JoaoPessoaLtda"`), and email punctuation is stripped (`"usuario@empresa.com.br"` becomes `"usuarioempresacombr"`). What counts as "special" beyond the examples is not defined — do not generalize.
 
 ## RetiraAcentuacao
 
@@ -834,16 +834,16 @@ Documentation conflict: the prose claims the function returns the string "sem ac
 
 - `CopiarAlfa` vs `CopiarStr`, `TamanhoAlfa` vs `TamanhoStr`, `PosicaoAlfa` vs `PosicaoStr`, `DeletarAlfa` vs `DeletarStr`, `InserirAlfa` vs `InserirStr`: documented only as paired signatures with identical examples and glosses. No source distinction found. Do not choose one over the other on semantic grounds.
 - `SubstAlfa` (all occurrences) vs `SubstAlfaUmaVez` (first only): the one stated distinction in this family.
-- `SubstAlfa` vs `TrocaString`: argument order differs (`SubstAlfa` takes the target text last; `TrocaString` takes it first) and `TrocaString` claims “more control options” without detail. No selection guidance exists — record, do not invent.
+- `SubstAlfa` vs `TrocaString`: argument order differs (`SubstAlfa` takes the target text last; `TrocaString` takes it first) and `TrocaString` claims "more control options" without detail. No selection guidance exists — record, do not invent.
 - `CaracterParaAlfa` vs `RetornaAscII`: both convert a numeric ASCII code to an `Alfa` character; the source states no difference. `LerPosicaoAlfa` is the inverse direction (character becomes ASCII code into a `Numero` variable).
-- `ListaItem` / `ListaQuantidade` (plain-text split/count) vs `ListaRegra*` (rule-list API): different domains; the latter belongs to the future rule-list/database documentation.
+- `ListaItem` / `ListaQuantidade` (plain-text split/count) vs `ListaRegra*` (rule-list API): different domains; the latter's core is documented in `../language/collections.md`, with the full catalog deferred.
 - `ConverteParaMaiusculo` / `ConverteParaMinusculo` vs `RetiraAcentuacao`: case functions convert in place without touching accents per their examples; `RetiraAcentuacao` also strips accents with disputed case behavior (see conflict above).
 - `DeixaNumeros` (keep only digits) is documented in the validation domain, not here — see deferred list.
 
 ## Deliberately deferred (inspected, not documented on this page)
 
-- General conversions — `AlfaParaData`, `AlfaParaDecimal`, `AlfaParaInt`, `IntParaAlfa`, `DecimalParaAlfa`, `StrParaInt` (stated equivalent of `AlfaParaInt`), `IntParaStr` (stated equivalent of `IntParaAlfa`), `ConverteMascara`: the source gives them a dedicated `Cast de Variável` section. They belong to a future conversion slice. `NumeroParaAlfa` and `AlfaParaNumero` were searched for and occur zero times — they are not documented and must not be generated.
-- `CarregarTextoArq(<arquivo>, <texto>)`: file reading into an `Alfa` variable — belongs to the future files domain despite the `Alfa` output.
+- General conversions — `AlfaParaData`, `AlfaParaDecimal`, `AlfaParaInt`, `IntParaAlfa`, `DecimalParaAlfa`, `StrParaInt` (stated equivalent of `AlfaParaInt`), `IntParaStr` (stated equivalent of `IntParaAlfa`), `ConverteMascara`: the source gives them a dedicated `Cast de Variável` section. They are documented in `conversion.md`. `NumeroParaAlfa` and `AlfaParaNumero` were searched for and occur zero times — they are not documented and must not be generated.
+- `CarregarTextoArq(<arquivo>, <texto>)`: file reading into an `Alfa` variable — documented in `../io/files.md` despite the `Alfa` output.
 - `DeixaNumeros`: dedicated validation-domain section — belongs to the future validation slice.
 - `BuscaLinhaTexto`: quoted only as a `QuebraTexto` dependency; printing/report behavior — belongs to a future domain.
 - `ValorElementoJson` and HTTP/file/database/report functions accepting `Alfa`: cross-domain, excluded per scope.
@@ -853,13 +853,13 @@ Documentation conflict: the prose claims the function returns the string "sem ac
 1. `RetiraAcentuacao` uppercase claim vs. its own Example 2 (above).
 2. Arithmetic inside string-function parameters in presented-as-working material — `CopiarAlfa(vaEmail, vnPosArroba + 1, vnTamanho - vnPosArroba);`, `CopiarAlfa(vaValorFrete, vnInicio, vnFim - vnInicio);` — vs. the no-manipulation-in-parameters rule (`../guides/limitations.md` L3). Preserved, not resolved.
 3. `TamanhoAlfa`/`ListaQuantidade` direct-return and in-condition forms are documented errors with contradicting presented-as-working examples — preserved in limitations L1/L4.
-4. Literals in positions glossed as “Variável” (`InserirAlfa("empresa de ", …)`, `Concatena(vaNome, " - ", …)`, `CaracterParaAlfa(65, …)`, `QuebraTexto(vaTexto, 30, …)`): demonstrated acceptance only; not a general rule.
+4. Literals in positions glossed as "Variável" (`InserirAlfa("empresa de ", …)`, `Concatena(vaNome, " - ", …)`, `CaracterParaAlfa(65, …)`, `QuebraTexto(vaTexto, 30, …)`): demonstrated acceptance only; not a general rule.
 5. The single-quote comparison (`Se (vnCodigoCaractere = 'T')`) is demonstrated once under `LerPosicaoAlfa`; single-quote literal semantics are otherwise undocumented.
 6. `Alfa`+`Alfa` concatenation with `+` is documented; whether `Concatena` accepts fewer than 3 inputs is undocumented.
 
 ## Deliberately not documented
 
-Implicit conversions, text encoding of `Alfa` values, maximum lengths, truncation on assignment, Unicode/locale/case-folding rules, null and empty-string behavior, whitespace definitions, 0- vs 1-based indexing beyond the stated `CopiarAlfa` 1-based positions, error values for not-found positions other than `PosicaoAlfa`’s documented 0, and performance characteristics — none are stated in the inspected material and none are inferred.
+Implicit conversions, text encoding of `Alfa` values, maximum lengths, truncation on assignment, Unicode/locale/case-folding rules, null and empty-string behavior, whitespace definitions, 0- vs 1-based indexing beyond the stated `CopiarAlfa` 1-based positions, error values for not-found positions other than `PosicaoAlfa`'s documented 0, and performance characteristics — none are stated in the inspected material and none are inferred.
 
 ## Provenance
 

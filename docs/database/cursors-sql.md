@@ -383,6 +383,8 @@ Se (vnErro = 0) {
 }
 ```
 
+Note: the `Mensagem(Erro, ... + vaMensagemErro)` line concatenates inside a function parameter in presented-as-working material — an L3-family witness; see `../guides/limitations.md` L3. The excerpt is preserved for the transaction pattern, not as endorsement of that call shape.
+
 All these examples build SQL by concatenation — the dynamic-SQL conflict noted above. The `:BLOB(vaBlob)` placeholder spelling is demonstrated in an `ExecSQLEx` INSERT.
 
 ## Transactions
@@ -451,8 +453,8 @@ All guidance is project caution unless independently backed above.
 ## Deferred (inspected, not this domain)
 
 - `ListaSecao`, report controls/SQL-clause builders: reports domain.
-- Web-service grid patterns: web-service domain.
-- `ValorElementoJson`, JSON arrays: JSON domain.
+- Web-service grid patterns: covered in `../integration/http-webservices.md` (WS grid API).
+- `ValorElementoJson`, JSON arrays: documented in `../data/json.md`.
 - `MontaData`/`CodData` in date-flavored SQL strings: dates-time owns them.
 - `ArqExiste` guards around SQL file reads: validation/files domains.
 

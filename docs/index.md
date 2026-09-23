@@ -5,12 +5,12 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 ## Language core
 
 - [Syntax and structure](language/syntax.md) — available. Statement termination, case sensitivity, code blocks, conditions in parentheses, comments, escaping, line continuation, formatting conventions.
+- [Variables, data types, declarations, and naming](language/variables.md) — available. Documented types, `Definir` syntax, sized `Alfa`, name constraints, `va`/`vn`/`vd` convention, declaration placement, initialization guidance.
 
 ## Not yet transformed
 
 The following domains exist in the source but have no structured file in this repository yet. Do not treat their absence as a statement about LSP.
 
-- Variables, data types, and naming
 - Operators
 - Control flow (`Se`, `Senao`, `Para`, `Enquanto`, `Pare`, `Continue`, `VaPara`, `Cancel`)
 - String, date, number, and conversion functions

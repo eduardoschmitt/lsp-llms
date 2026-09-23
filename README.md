@@ -8,10 +8,11 @@ LSP documentation structured for LLM consumption.
 
 ```text
 docs/           # structured reference, one topic per file
-docs/index.md   # navigation map, evidence vocabulary, and coverage
-llms.txt        # generated compact entry point for LLMs
-llms-full.txt   # generated consolidated documentation corpus
-scripts/        # deterministic generation tooling
+docs/index.md   # navigation map and coverage status
+llms.txt        # generated compact entry point (do not edit)
+llms-full.txt   # generated consolidated corpus (do not edit)
+scripts/        # deterministic generator (Python 3, stdlib only)
+evals/          # evaluation suites (test artifacts, never corpus input)
 ```
 
 The generated artifacts are reproducible from `docs/`:

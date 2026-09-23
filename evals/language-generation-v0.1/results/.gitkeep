@@ -1,0 +1,3 @@
+This directory will hold per-model execution records once real evaluations run.
+Response files are immutable history; diagnoses and corrections live alongside
+them, never in their place. See ../README.md for the protocol.

@@ -488,6 +488,14 @@ Classification: **Community guidance** + **Common error / troubleshooting observ
 
 Declaring inside a conditional block, or not declaring at all, is the documented cause of "Variável não definida" / "may cause errors". Full incorrect/correct pairs live in `../language/variables.md` (Declaration placement); follow that file's call-first, declare-at-top pattern when generating code. Not repeated here to avoid a second maintained copy.
 
+## L13 — Keep source lines short (observed compiler limit)
+
+Classification: **Observed limitation** (evaluation evidence, not community prose).
+
+A v0.1 evaluation rule failed compilation with `Erro de sintaxe, linha para o compilador é muito grande` at column 255 on a single message-construction assignment spanning three test cases. Splitting only that statement into shorter sequential assignments — byte-identical final string — compiled and executed. The evaluator further observed the error persists even with the rule commented out, suggesting the limit acts during line reading/parsing (recorded as observation, not mechanism). See `evals/language-generation-v0.1/POSTMORTEM.md`, Finding #2.
+
+Project guidance: build long messages through multiple shorter statements rather than one long source line. No universal maximum is claimed — column 255 is the failure point of that execution, not a specification.
+
 ## Provenance
 
 Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Conceitos Fundamentais` / `Lembre-se Sempre`; `Debugging e Troubleshooting`; `Avisos Importantes para Iniciantes` (Limitações #1–#2, Regras #3–#5); `Erros Comuns e Soluções` (`Chr`, `FormatarData`, date literal, undeclared variables, `Truncar`, Erros #1–#6); `Conceitos Mentais` #1–#2 (return-parameter and manipulate-first models) and `Exemplos Práticos` (contradiction evidence); `LIMITAÇÕES CRÍTICAS DA LSP` in full (executive summary, parameter manipulation, `Mensagem` sensitivity, JSON/payload ban, `SQL_Retornar` parameter rule, direct-vs-output return with exception list and summary table, grid/table assignment); `Mensagens` (input rules, types, button-index return); `EntradaValor` (only for the `DataHoje(vnDataHoje)` conflict evidence); `Cancel` (context meanings); `Padrões e Boas Práticas` (supporting conventions); `Cheat Sheet — Armadilhas Comuns` and `LEMBRETE FINAL: Regra de Ouro`. Portuguese prose translated into English; LSP identifiers, literals, and code examples preserved unchanged. Senior Sistemas is the authoritative source for official behavior.

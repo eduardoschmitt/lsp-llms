@@ -176,17 +176,17 @@ Documented limitation (explicit scope rule): `Pare;` may only be used inside `Pa
 Valid source examples (source-faithful; correctness annotations translated per repository style, code unchanged):
 
 ```lsp
-@ Dentro de loop Para @
+@ Inside the Para loop @
 Para (vnI = 1; vnI <= 10; vnI++) {
   Se (vnI = 5) {
-    Pare;  @ Correct: dentro do loop Para @
+    Pare;  @ Correct: inside the Para loop @
   }
 }
 
-@ Dentro de loop Enquanto @
+@ Inside the Enquanto loop @
 Enquanto (vnContador > 0) {
   Se (vnContador = 3) {
-    Pare;  @ Correct: dentro do loop Enquanto @
+    Pare;  @ Correct: inside the Enquanto loop @
   }
   vnContador--;
 }
@@ -195,19 +195,19 @@ Enquanto (vnContador > 0) {
 Intentionally invalid source example with the documented fix (source-faithful):
 
 ```lsp
-@ Incorrect: dentro de função, fora de loops @
+@ Incorrect: inside a function, outside loops @
 Funcao validarDados(); {
   Se (vnTamanho < 5) {
     Mensagem(Erro, "Tamanho inválido");
-    Pare;  @ ERRO: Pare só funciona em loops! @
+    Pare;  @ Error: Pare only works in loops! @
   }
 }
 
-@ Correct: usar Cancel(1) para interromper função @
+@ Correct: use Cancel(1) to interrupt the function @
 Funcao validarDados(); {
   Se (vnTamanho < 5) {
     Mensagem(Erro, "Tamanho inválido");
-    Cancel(1);  @ Correct: para interromper função @
+    Cancel(1);  @ Correct: to interrupt the function @
   }
 }
 ```
@@ -217,7 +217,7 @@ Practical source example combining both commands (source-faithful):
 ```lsp
 Definir Funcao exemploControleFluxo();
 
-@ Variáveis globais @
+@ Global variables @
 Definir Numero vnContador;
 Definir Alfa vaDados;
 Definir Numero vnTamanho;
@@ -225,18 +225,18 @@ Definir Numero vnTamanho;
 exemploControleFluxo();
 
 Funcao exemploControleFluxo(); {
-  @ Loop com Pare - usar Pare @
+  @ Loop with Pare - use Pare @
   vnContador = 1;
   Para (vnContador = 1; vnContador <= 10; vnContador++) {
     Se (vnContador = 5) {
-      Pare;  @ Correct: saindo de loop @
+      Pare;  @ Correct: exiting the loop @
     }
   }
 
-  @ Validação final - usar Cancel(1) @
+  @ Final validation - use Cancel(1) @
   TamanhoAlfa(vaDados, vnTamanho);
   Se (vnTamanho < 3) {
-    Cancel(1);  @ Correct: saindo de função @
+    Cancel(1);  @ Correct: exiting the function @
   }
 
   Mensagem(Retorna, "Processamento concluído!");

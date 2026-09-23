@@ -14,12 +14,12 @@ Correct (source-faithful):
 
 ```lsp
 Definir Numero vnNumero;
-Definir Alfa vaNumero;     @ Variável Alfa para receber conversão @
+Definir Alfa vaNumero;     @ Alfa variable that receives the converted value @
 Definir Alfa vaResultado;
 
 vnNumero = 10;
-IntParaAlfa(vnNumero, vaNumero);  @ Converte número para Alfa @
-vaResultado = "O número é " + vaNumero;  @ Concatena apenas Alfas @
+IntParaAlfa(vnNumero, vaNumero);  @ Converts the number to Alfa @
+vaResultado = "O número é " + vaNumero;  @ Concatenate only Alfa values @
 ```
 
 Incorrect (source-faithful):
@@ -29,7 +29,7 @@ Definir Numero vnNumero;
 Definir Alfa vaResultado;
 
 vnNumero = 10;
-vaResultado = "O número é " + vnNumero;  @ ERRO: Numero não pode ser concatenado! @
+vaResultado = "O número é " + vnNumero;  @ Error: Numero cannot be concatenated! @
 ```
 
 Documented matrix: `Alfa` + `Alfa` allowed; `"string"` + `Alfa` allowed; `Alfa` + `Numero`, `"string"` + `Numero`, and `Numero` + `Numero` are errors (numeric addition uses arithmetic operators instead). Concatenation inside function parameters is restricted — see `../guides/limitations.md` (L3); that conflict is not resolved here.
@@ -55,11 +55,11 @@ Example (source-faithful):
 Definir Alfa vaLetra;
 Definir Alfa vaEnter;
 
-@ Conversão de código ASCII para caracter @
-CaracterParaAlfa(65, vaLetra); @ vaLetra será "A" @
+@ Converting an ASCII code to a character @
+CaracterParaAlfa(65, vaLetra); @ vaLetra will be "A" @
 
-@ Quebra de linha @
-CaracterParaAlfa(13, vaEnter); @ vaEnter será quebra de linha @
+@ Line break @
+CaracterParaAlfa(13, vaEnter); @ vaEnter will be a line break @
 ```
 
 Line-break usage (source-faithful): LSP has no `\n` escape; obtain the break character and concatenate it:
@@ -92,10 +92,10 @@ Parameters:
 Example, letters (source-faithful excerpt):
 
 ```lsp
-vnCodigo = 65;  @ Código ASCII da letra 'A' @
+vnCodigo = 65;  @ ASCII code of the letter 'A' @
 RetornaAscII(vnCodigo, vaCaracter);
 vaMensagem = "Código 65 = " + vaCaracter;
-Mensagem(Retorna, vaMensagem);  @ Resultado: "Código 65 = A" @
+Mensagem(Retorna, vaMensagem);  @ Result: "Código 65 = A" @
 ```
 
 Example, building a string in a loop (source-faithful excerpt):
@@ -108,7 +108,7 @@ Para (vnContador = 1; vnContador <= 4; vnContador++) {
   vaSenha = vaSenha + vaCaracter;
 }
 vaMensagem = "Senha gerada: " + vaSenha;
-Mensagem(Retorna, vaMensagem);  @ Resultado: "Senha gerada: ABCD" @
+Mensagem(Retorna, vaMensagem);  @ Result: "Senha gerada: ABCD" @
 ```
 
 Source notes: despite the `Retorna-` name, the documented form uses an output parameter, not a direct return. The source gives no distinction between `RetornaAscII` and `CaracterParaAlfa` — both convert a numeric code to an `Alfa` character. Do not invent one; see conflicts.
@@ -137,14 +137,14 @@ Definir Alfa vaTexto;
 Definir Alfa vaNome;
 Definir Alfa vaSobrenome;
 
-@ Para extrair "João" @
+@ To extract "João" @
 vaTexto = "João Silva Santos";
-vaNome = vaTexto;  @ Faz uma cópia primeiro @
-CopiarAlfa(vaNome, 1, 4); @ vaNome será "João" @
+vaNome = vaTexto;  @ Copy it first @
+CopiarAlfa(vaNome, 1, 4); @ vaNome will be "João" @
 
-@ Para extrair "Silva" @
-vaSobrenome = vaTexto;  @ Faz uma cópia primeiro @
-CopiarAlfa(vaSobrenome, 6, 5); @ vaSobrenome será "Silva" @
+@ To extract "Silva" @
+vaSobrenome = vaTexto;  @ Copy it first @
+CopiarAlfa(vaSobrenome, 6, 5); @ vaSobrenome will be "Silva" @
 ```
 
 Official-Senior example quoted in the source (source-faithful):
@@ -153,7 +153,7 @@ Official-Senior example quoted in the source (source-faithful):
 Definir Alfa exemplo;
 exemplo = "texto de exemplo";
 CopiarAlfa(exemplo, 12, 3);
-@ Após o uso da função, o conteúdo da variável "exemplo" seria "emp" @
+@ After the call, the "exemplo" variable content would be "emp" @
 ```
 
 Return behavior: in-place side effect on the first variable; no separate output variable and no direct return. Because the source is destructive, copy the value to another variable first when the original must be kept. No `= CopiarAlfa(...)` usage exists anywhere in the source.
@@ -245,8 +245,8 @@ Purpose: replace text spans inside a string.
 Signatures (source-faithful):
 
 ```lsp
-SubstAlfa(<subtexto>, <novoTexto>, <texto>);      @ Substitui todas as ocorrências @
-SubstAlfaUmaVez(<subtexto>, <novoTexto>, <texto>); @ Substitui apenas a primeira @
+SubstAlfa(<subtexto>, <novoTexto>, <texto>);      @ Replaces all occurrences @
+SubstAlfaUmaVez(<subtexto>, <novoTexto>, <texto>); @ Replaces only the first @
 ```
 
 Parameters:
@@ -264,14 +264,14 @@ Definir Alfa vaTextoLimpo;
 vaTexto = "João--Silva--Santos";
 vaTextoLimpo = vaTexto;
 
-@ Substitui todos os traços duplos por espaço simples @
+@ Replaces all double dashes with a single space @
 SubstAlfa("--", " ", vaTextoLimpo);
-@ vaTextoLimpo será "João Silva Santos" @
+@ vaTextoLimpo will be "João Silva Santos" @
 
-@ Exemplo com SubstAlfaUmaVez @
+@ Example with SubstAlfaUmaVez @
 vaTexto = "teste teste teste";
 SubstAlfaUmaVez("teste", "TESTE", vaTexto);
-@ vaTexto será "TESTE teste teste" (apenas o primeiro) @
+@ vaTexto will be "TESTE teste teste" (only the first one) @
 ```
 
 Return behavior: in-place on the third variable; no direct-return usage exists in the source. The documented distinction is scope: all occurrences vs. first only. Literals are demonstrated in the first two positions.
@@ -301,7 +301,7 @@ vaEmpresa = "Senior Sistemas";
 vaMensagemFinal = vaTemplate;
 TrocaString(vaMensagemFinal, "__NOME__", vaNomeUsuario);
 TrocaString(vaMensagemFinal, "__EMPRESA__", vaEmpresa);
-@ vaMensagemFinal será "Olá João Silva, bem-vindo à Senior Sistemas!" @
+@ vaMensagemFinal will be "Olá João Silva, bem-vindo à Senior Sistemas!" @
 ```
 
 Return behavior: in-place on the first variable, consistent with all usages (including `TrocaString(vaURL, "__NUMCEP__", vaCepApi);` in a community HTTP example). Parameters are not individually described in the source. No documented distinction from `SubstAlfa` beyond the “more control options” phrase — see conflicts.
@@ -334,7 +334,7 @@ vaTexto2 = " - ";
 vaTexto3 = "Pedrão";
 
 Concatena(vaTexto1, vaTexto2, vaTexto3, vaResultado);
-@ vaResultado será "Pedro Luiz Souza - Pedrão" @
+@ vaResultado will be "Pedro Luiz Souza - Pedrão" @
 ```
 
 A second source example demonstrates a literal in an input position (source-faithful excerpt):
@@ -344,7 +344,7 @@ vaNome = "Pedro Luiz Souza";
 vaApelido = "Pedrão";
 
 Concatena(vaNome, " - ", vaApelido, vaResultado);
-@ vaResultado será "Pedro Luiz Souza - Pedrão" @
+@ vaResultado will be "Pedro Luiz Souza - Pedrão" @
 ```
 
 Return behavior: output parameter. Whether fewer than 3 inputs are allowed is not documented — both examples pass exactly 3 inputs. Demonstrated usage accepts a string literal as an input; the parameter gloss says “Campo/Variável”, so treat literal acceptance as demonstrated, not as a general rule.
@@ -369,12 +369,12 @@ Definir Alfa vaEmail;
 vaNome = "joão SILVA santos";
 vaEmail = "USUARIO@EMPRESA.COM.BR";
 
-@ Padroniza email (tudo minúsculo) @
+@ Standardizes the email (all lowercase) @
 ConverteParaMinusculo(vaEmail);
-@ vaEmail será "usuario@empresa.com.br" @
+@ vaEmail will be "usuario@empresa.com.br" @
 
-@ Para nome próprio @
-ConverteParaMaiusculo(vaNome); @ Vira "JOÃO SILVA SANTOS" @
+@ For proper names @
+ConverteParaMaiusculo(vaNome); @ Becomes "JOÃO SILVA SANTOS" @
 ```
 
 Return behavior: in-place on the single variable in all usages (7 and 4 source occurrences, all consistent). Accented characters are preserved with case applied (`"joão SILVA santos"` becomes `"JOÃO SILVA SANTOS"`). No stated difference between the two beyond direction.
@@ -396,11 +396,11 @@ Definir Alfa vaCPF;
 
 vaCPF = "123.456.789-10";
 
-@ Remove formatação do CPF @
-DeletarAlfa(vaCPF, 4, 1);  @ Remove primeiro ponto @
-DeletarAlfa(vaCPF, 7, 1);  @ Remove segundo ponto @
-DeletarAlfa(vaCPF, 10, 1); @ Remove traço @
-@ vaCPF será "12345678910" @
+@ Removes the CPF formatting @
+DeletarAlfa(vaCPF, 4, 1);  @ Removes the first dot @
+DeletarAlfa(vaCPF, 7, 1);  @ Removes the second dot @
+DeletarAlfa(vaCPF, 10, 1); @ Removes the dash @
+@ vaCPF will be "12345678910" @
 ```
 
 `DeletarStr` signature (source-faithful):
@@ -421,7 +421,7 @@ Example (source-faithful):
 Definir Alfa vaOrigem;
 vaOrigem = "Senior empresa de Sistemas";
 DeletarStr(vaOrigem, 8, 11);
-@ vaOrigem será "Senior Sistemas" @
+@ vaOrigem will be "Senior Sistemas" @
 ```
 
 Return behavior: in-place on the first variable in all usages (11 `DeletarAlfa` occurrences, all consistent).
@@ -449,7 +449,7 @@ Example (source-faithful, same under both names):
 Definir Alfa vaOrigem;
 vaOrigem = "Senior Sistemas";
 InserirAlfa("empresa de ", vaOrigem, 8);
-@ vaOrigem será "Senior empresa de Sistemas" @
+@ vaOrigem will be "Senior empresa de Sistemas" @
 ```
 
 Source observation (both sections): the origin variable’s content is truncated if its defined size is not respected. No size/overflow mechanics beyond that sentence are documented. No stated difference between the `Alfa` and `Str` variants.
@@ -474,21 +474,21 @@ Examples (source-faithful):
 Definir Alfa vaTexto;
 vaTexto = "  texto com espaços  ";
 LimpaEspacos(vaTexto);
-@ vaTexto será "texto com espaços" @
+@ vaTexto will be "texto com espaços" @
 ```
 
 ```lsp
 Definir Alfa vaTexto;
 vaTexto = "  texto com espaços  ";
 LimpaEspacosDireita(vaTexto);
-@ vaTexto será "  texto com espaços" @
+@ vaTexto will be "  texto com espaços" @
 ```
 
 ```lsp
 Definir Alfa vaTexto;
 vaTexto = "  texto com espaços  ";
 LimpaEspacosEsquerda(vaTexto);
-@ vaTexto será "texto com espaços  " @
+@ vaTexto will be "texto com espaços  " @
 ```
 
 Return behavior: in-place on the single variable; no parameter glosses, no direct-return form, no documented definition of “blank space” beyond the examples. The source demonstrates variables only, not literals, in the argument position.
@@ -523,7 +523,7 @@ QuebraTexto(vaTexto, 30, vnNumLin);
 vnLinAtu = 1;
 Enquanto (vnLinAtu <= vnNumLin) {
   BuscaLinhaTexto(vaTexto, vnLinAtu, vaFrase);
-  @ Processa cada linha @
+  @ Processes each line @
   vnLinAtu++;
 }
 ```
@@ -555,8 +555,8 @@ Definir Alfa vaStrResto;
 
 vaStrProcura = "Primeira linha" + vaEnter + "Segunda linha";
 ProcuraEnter(vaStrProcura, vaStrImp, vaStrResto);
-@ vaStrImp será "Primeira linha" @
-@ vaStrResto será "Segunda linha" @
+@ vaStrImp will be "Primeira linha" @
+@ vaStrResto will be "Segunda linha" @
 ```
 
 Source observation: to print each enter-separated note, print `StrImp` then keep searching `StrResto`. (`vaEnter` here is the break character obtained via `CaracterParaAlfa(13, vaEnter)`.) Whether the input is modified is not stated.
@@ -589,7 +589,7 @@ vaOperacao = "+";
 vaArg1 = "100";
 vaArg2 = "50";
 CalculaAlfa(vaOperacao, vaArg1, vaArg2, vaResultado);
-@ vaResultado será "150" @
+@ vaResultado will be "150" @
 ```
 
 Source observations: only sum, subtraction, and multiplication exist; all calculations use integers — a non-integer input causes an error; and this function is much slower than direct calculation (`c = a + b`). Only the documented operators may be assumed.
@@ -620,16 +620,16 @@ Definir Numero vnPosicao;
 vaTexto = "TESTE";
 vnPosicao = 1;
 
-@ Obtém o código ASCII do primeiro caractere @
+@ Gets the ASCII code of the first character @
 LerPosicaoAlfa(vaTexto, vnCodigoCaractere, vnPosicao);
-@ vnCodigoCaractere será 84 (código ASCII de 'T') @
+@ vnCodigoCaractere will be 84 (ASCII code of 'T') @
 
-@ Comparação com código ASCII @
+@ Comparison with the ASCII code @
 Se (vnCodigoCaractere = 84) { @ 'T' @
   Mensagem(Retorna, "Primeiro caractere é T");
 }
 
-@ Para comparar diretamente com caractere, use aspas simples @
+@ To compare directly with a character, use single quotes @
 Se (vnCodigoCaractere = 'T') {
   Mensagem(Retorna, "Primeiro caractere é T");
 }
@@ -767,7 +767,7 @@ Definir Alfa vaTextoDestino;
 vaTextoOrigem = "\\u00c1gua";
 
 ConverteTexto("JSON", vaTextoOrigem, vaTextoDestino);
-@ vaTextoDestino recebe o valor "Água" @
+@ vaTextoDestino receives the value "Água" @
 ```
 
 Source observation: use only for character-set conversion, not for converting datasets such as JSON structures. The source carries a large supported-code table (for example `\\u0021` becomes `!`, `\\u0041` becomes `A`, `\\u00C1` becomes `Á`); the full table is not reproduced here — consult the source `ConverteTexto` section for the complete mapping. Only `"JSON"` is documented as a supported format.
@@ -793,13 +793,13 @@ vaTextoOriginal = "João & Pessoa Ltda.";
 vaTextoLimpo = vaTextoOriginal;
 RetiraCaracteresEspeciais(vaTextoLimpo);
 vaMensagem = "Original: " + vaTextoOriginal + " | Limpo: " + vaTextoLimpo;
-Mensagem(Retorna, vaMensagem);  @ Resultado: "JoaoPessoaLtda" @
+Mensagem(Retorna, vaMensagem);  @ Result: "JoaoPessoaLtda" @
 
 vaTextoOriginal = "(47) 99999-8888";
 vaTextoLimpo = vaTextoOriginal;
 RetiraCaracteresEspeciais(vaTextoLimpo);
 vaMensagem = "Telefone original: " + vaTextoOriginal + " | Apenas números: " + vaTextoLimpo;
-Mensagem(Retorna, vaMensagem);  @ Resultado: "4799998888" @
+Mensagem(Retorna, vaMensagem);  @ Result: "4799998888" @
 ```
 
 Return behavior: single-argument in-place modification; no direct return. Accent removal is demonstrated (`"João & Pessoa Ltda."` becomes `"JoaoPessoaLtda"`), and email punctuation is stripped (`"usuario@empresa.com.br"` becomes `"usuarioempresacombr"`). What counts as “special” beyond the examples is not defined — do not generalize.
@@ -825,7 +825,7 @@ vaTextoOriginal = "José António da Silva";
 vaTextoSemAcento = vaTextoOriginal;
 RetiraAcentuacao(vaTextoSemAcento);
 vaMensagem = "Original: " + vaTextoOriginal + " | Sem acento: " + vaTextoSemAcento;
-Mensagem(Retorna, vaMensagem);  @ Resultado: "JOSE ANTONIO DA SILVA" @
+Mensagem(Retorna, vaMensagem);  @ Result: "JOSE ANTONIO DA SILVA" @
 ```
 
 Documentation conflict: the prose claims the function returns the string "sem acentuação e em maiúsculo" (unaccented and uppercase), and Example 1 and the address example (`"Rua das Açucenas, 123 - São José"` becomes `"RUA DAS ACUCENAS, 123 - SAO JOSE"`) match that — but Example 2 (`"ÇçÁáàÉéÚúÍí"` becomes `"CcAaaEeUuIi"`) preserves mixed case, contradicting the uppercase claim. Case behavior is therefore unresolved: expect accent removal; do not rely on uppercasing.

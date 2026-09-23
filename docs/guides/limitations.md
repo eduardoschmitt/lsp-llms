@@ -15,7 +15,7 @@ What the source says: most LSP functions do not return values directly; they fil
 Do not generate (source-faithful incorrect forms):
 
 ```lsp
-@ ERRO: Tentativa de retorno direto @
+@ Error: direct-return attempt @
 vnTamanho = TamanhoAlfa(vaTexto);
 vnPosicao = PosicaoAlfa("@", vaEmail);
 vnLinhas = LinhasArquivo(vaCaminho);
@@ -29,7 +29,7 @@ vnAtiva = VerificaAbaAtiva(vaDescricao);
 Generate instead (source-faithful correct forms):
 
 ```lsp
-@ CORRETO: Usar parâmetro de retorno @
+@ Correct: use a return parameter @
 TamanhoAlfa(vaTexto, vnTamanho);
 PosicaoAlfa("@", vaEmail, vnPosicao);
 LinhasArquivo(vaCaminho, vnLinhas);
@@ -59,7 +59,7 @@ Classification: **Documentation conflict or uncertainty** (general rule vs. docu
 What the source says: the following functions ARE documented as returning values directly (source-faithful):
 
 ```lsp
-@ Estas funções SIM retornam valores diretamente @
+@ These functions DO return values directly @
 vnRetorno = ConverteCodificacaoString(vaTexto, "UTF-8", vaDestino);
 vnArquivo = Abrir("arquivo.txt", Ler);
 vdData = CodData(vnDia, vnMes, vnAno);
@@ -82,23 +82,23 @@ What the source says: LSP does not support manipulations/operations inside funct
 Do not generate (source-faithful):
 
 ```lsp
-@ ERRO: Concatenação no parâmetro @
+@ Error: concatenation in the parameter @
 Mensagem(Retorna, "Resultado: " + vaValor + " pontos");
 
-@ ERRO: Função dentro de parâmetro @
+@ Error: function call inside the parameter @
 Mensagem(Retorna, "Idade: " + IntParaAlfa(vnIdade));
 
-@ ERRO: Operação matemática no parâmetro @
+@ Error: math operation in the parameter @
 SubstAlfa("]}", vaObjeto + "]}", vaTexto);
 
-@ ERRO: Múltiplas concatenações @
+@ Error: multiple concatenations @
 Mensagem(Retorna, vaNome + " - " + vaEmail + " (" + IntParaAlfa(vnId) + ")");
 ```
 
 Generate instead (source-faithful):
 
 ```lsp
-@ CORRETO: Fazer manipulações antes @
+@ Correct: perform manipulations first @
 Definir Alfa vaMensagem;
 Definir Alfa vaIdade;
 
@@ -106,11 +106,11 @@ IntParaAlfa(vnIdade, vaIdade);
 vaMensagem = "Resultado: " + vaValor + " pontos";
 Mensagem(Retorna, vaMensagem);
 
-@ CORRETO: Para SubstAlfa @
+@ Correct: for SubstAlfa @
 vaObjeto = vaObjeto + "]}";
 SubstAlfa("]}", vaObjeto, vaTexto);
 
-@ CORRETO: Para múltiplas concatenações @
+@ Correct: for multiple concatenations @
 vaMensagem = vaNome + " - " + vaEmail + " (" + vaIdade + ")";
 Mensagem(Retorna, vaMensagem);
 ```
@@ -118,12 +118,12 @@ Mensagem(Retorna, vaMensagem);
 Cheat-sheet form of the same rule (source-faithful):
 
 ```lsp
-@ NUNCA FAÇA @
-Mensagem(Retorna, "Valor: " + IntParaAlfa(vnNumero));  @ Erro! @
-vnTamanho = TamanhoAlfa(vaTexto);                      @ Erro! @
-AlfaParaDecimal(vaTexto, Grid.Campo);                  @ Erro! @
+@ Never do this @
+Mensagem(Retorna, "Valor: " + IntParaAlfa(vnNumero));  @ Error! @
+vnTamanho = TamanhoAlfa(vaTexto);                      @ Error! @
+AlfaParaDecimal(vaTexto, Grid.Campo);                  @ Error! @
 
-@  SEMPRE FAÇA @
+@ Always do this @
 IntParaAlfa(vnNumero, vaNumeroStr);
 vaMensagem = "Valor: " + vaNumeroStr;
 Mensagem(Retorna, vaMensagem);
@@ -152,7 +152,7 @@ Classification: **Documentation conflict or uncertainty** (explicit incorrect ex
 Documented incorrect forms (source-faithful):
 
 ```lsp
-@ ERRO MUITO COMUM: Usar em condicionais @
+@ Very common error: use in conditionals @
 Se (TamanhoAlfa(vaCNPJ) <> 14) {
   Mensagem(Erro, "CNPJ deve ter 14 dígitos");
 }
@@ -164,13 +164,13 @@ Se (ArqExiste(vaCaminho)) {
 
 ```lsp
 @ Incorrect @
-Se (EstaNulo(vaDado, vnEhNulo) = 0) {  @ Função não retorna valor @
+Se (EstaNulo(vaDado, vnEhNulo) = 0) {  @ Function returns no value @
 ```
 
 Documented correct pattern (source-faithful): execute first, compare the filled variable afterwards.
 
 ```lsp
-@ CORRETO: Usar em condicionais @
+@ Correct: use in conditionals @
 Definir Numero vnTamanhoCNPJ;
 TamanhoAlfa(vaCNPJ, vnTamanhoCNPJ);
 Se (vnTamanhoCNPJ <> 14) {
@@ -186,8 +186,8 @@ Se (vnArquivoExiste = 1) {
 
 ```lsp
 @ Correct @
-EstaNulo(vaDado, vnEhNulo);  @ Executa função primeiro @
-Se (vnEhNulo = 0) {          @ Compara variável preenchida @
+EstaNulo(vaDado, vnEhNulo);  @ Execute the function first @
+Se (vnEhNulo = 0) {          @ Compare the filled variable @
 ```
 
 Contradicting source examples (presented as working, same forbidden shape): `Se (TamanhoAlfa(vaCNPJ) <> 14)` in the introductory practical examples; `Se (TamanhoAlfa(vaValorTimeout) > 0)` in a configuration-loading function; `Se (TamanhoAlfa(vaFotoFuncionario) > 0)` in a blob-retrieval function; `Se (ArqExiste(vaCaminhoArquivo) = 1)` in an external-tools function; `Se (SQL_Proximo(vaSQL) = 1)` in a sales-report function. Placeholder-style examples (`Se (operacaoCritica() = 1)`, `Se (vlEncomendas.VaiParaChave() = 1)`) also use call-in-condition shape but with illustrative rather than LSP-established function names — do not treat those names as LSP evidence.
@@ -224,23 +224,23 @@ Mensagem(Retorna, vaMensagem);
 ```
 
 ```lsp
-@ ERRO: Concatenação no parâmetro - NÃO FUNCIONA @
+@ Error: concatenation in the parameter - DOES NOT WORK @
 Mensagem(Retorna, "Aluno: " + vaNome + vaEnter + "Média: " + vaMedia);
 ```
 
 Large-payload ban: NEVER pass large JSON (similarly XML or long logs) to `Mensagem`; the source says it can hang the Senior system (travar o sistema Senior / travamento). Source-faithful dangerous forms:
 
 ```lsp
-@ PERIGOSO - Pode travar o sistema @
-Mensagem(Retorna, vaJSONResposta);  @ JSON grande @
-Mensagem(Retorna, vaXMLCompleto);   @ XML grande @
-Mensagem(Retorna, vaLogCompleto);   @ Log extenso @
+@ Dangerous - can hang the system @
+Mensagem(Retorna, vaJSONResposta);  @ Large JSON @
+Mensagem(Retorna, vaXMLCompleto);   @ Large XML @
+Mensagem(Retorna, vaLogCompleto);   @ Extensive log @
 ```
 
 Source-faithful safe alternatives (show a summary, not the payload):
 
 ```lsp
-@  SEGURO - Mostrar apenas informações resumidas @
+@ Safe - show only summarized information @
 Definir Alfa vaMensagem;
 Definir Numero vnTamanho;
 Definir Alfa vaTamanhoStr;
@@ -249,7 +249,7 @@ IntParaAlfa(vnTamanho, vaTamanhoStr);
 vaMensagem = "JSON recebido com " + vaTamanhoStr + " caracteres";
 Mensagem(Retorna, vaMensagem);
 
-@  SEGURO - Mostrar apenas parte do conteúdo @
+@ Safe - show only part of the content @
 Definir Alfa vaJSONTrecho;
 vaJSONTrecho = vaJSONResposta;
 CopiarAlfa(vaJSONTrecho, 1, 50);
@@ -262,11 +262,11 @@ Return behavior (documented, input/output distinction matters): with button labe
 ```lsp
 Definir Numero vnRetorno;
 
-vnRetorno = Mensagem(retorna,"Processo Concluído [&Ok!!!]"); @ O valor da variável vnRetorno será: 0 @
+vnRetorno = Mensagem(retorna,"Processo Concluído [&Ok!!!]"); @ The vnRetorno variable will be: 0 @
 
-vnRetorno = Mensagem(retorna,"Deseja Sair ? [&Sim,&Não]"); @ O valor da variável vnRetorno será: 0 para Sim e 1 para Não @
+vnRetorno = Mensagem(retorna,"Deseja Sair ? [&Sim,&Não]"); @ The vnRetorno variable will be: 0 for Sim and 1 for Não @
 
-vnRetorno = Mensagem(retorna,"Escolha uma opção ? [&Voltar,&Avançar, $Cancelar]"); @ O valor da variável vnRetorno será: 0 para Voltar, 1 para Avançar e 2 para Cancelar @
+vnRetorno = Mensagem(retorna,"Escolha uma opção ? [&Voltar,&Avançar, $Cancelar]"); @ The vnRetorno variable will be: 0 for Voltar, 1 for Avançar and 2 for Cancelar @
 ```
 
 Message types per the source: `Retorna` shows a warning message with the bracket-specified buttons (`&` marks the accelerator key); `Erro` and `Refaz` raise an exception, show an error message, and abort the rule. The lowercase `retorna` spelling in the button examples coexists with uppercase `Retorna` elsewhere — consistent with documented case-insensitivity, not a separate function.
@@ -278,14 +278,14 @@ Classification: **Documented limitation**.
 Grid/table restriction: conversion functions cannot assign directly into grid or table fields. Use an intermediate variable, then assign (source-faithful):
 
 ```lsp
-@ ERRO: Atribuição direta em grid @
+@ Error: direct assignment into a grid @
 AlfaParaDecimal(vaTexto, MinhaGrid.CampoDecimal);
 AlfaParaInt(vaTexto, MinhaTabela.CampoInteiro);
 AlfaParaData(vaTexto, MinhaGrid.CampoData);
 ```
 
 ```lsp
-@ CORRETO: Usar variável intermediária @
+@ Correct: use an intermediate variable @
 Definir Numero vnValorDecimal;
 Definir Numero vnValorInteiro;
 Definir Data vdDataConvertida;
@@ -305,15 +305,15 @@ Golden rule for grids: always use an intermediate variable for conversions in gr
 `SQL_Retornar` parameter restriction (critical rule): NEVER use `p`-prefixed function-parameter variables directly in `SQL_Retornar*` calls — Senior does not return values into them. Use locals, then assign to the parameters (source-faithful):
 
 ```lsp
-@ Incorrect - NÃO FUNCIONA @
+@ Incorrect - DOES NOT WORK @
 Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
-  SQL_RetornarInteiro(xCursor, "CODIGO", pCodigo);      @ ERRO: não retorna valor @
-  SQL_RetornarInteiro(xCursor, "RESULTADO", pResultado); @ ERRO: não retorna valor @
+  SQL_RetornarInteiro(xCursor, "CODIGO", pCodigo);      @ Error: returns no value @
+  SQL_RetornarInteiro(xCursor, "RESULTADO", pResultado); @ Error: returns no value @
 }
 ```
 
 ```lsp
-@ Correct - FUNCIONA @
+@ Correct - WORKS @
 Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
   Definir Numero vnCodigoTemp;
   Definir Numero vnResultadoTemp;
@@ -321,7 +321,7 @@ Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
   SQL_RetornarInteiro(xCursor, "CODIGO", vnCodigoTemp);
   SQL_RetornarInteiro(xCursor, "RESULTADO", vnResultadoTemp);
 
-  @ Atribuir valores às variáveis de parâmetro @
+  @ Assign values to the parameter variables @
   pCodigo = vnCodigoTemp;
   pResultado = vnResultadoTemp;
 }
@@ -334,33 +334,33 @@ Classification: **Documented limitation**; examples also serve as **Common error
 Concatenation (source “REGRA CRÍTICA”: only `Alfa` variables can be concatenated):
 
 ```lsp
-@ Incorrect - ERRO DE CONCATENAÇÃO @
+@ Incorrect - CONCATENATION ERROR @
 Definir Numero vnIdade;
 Definir Alfa vaMensagem;
 vnIdade = 25;
-vaMensagem = "Idade: " + vnIdade;  @ ERRO: Numero não concatena @
+vaMensagem = "Idade: " + vnIdade;  @ Error: Numero does not concatenate @
 ```
 
 ```lsp
-@ Correct - CONVERSÃO ANTES DA CONCATENAÇÃO @
+@ Correct - CONVERT BEFORE CONCATENATING @
 Definir Numero vnIdade;
 Definir Alfa vaIdadeStr;
 Definir Alfa vaMensagem;
 vnIdade = 25;
-IntParaAlfa(vnIdade, vaIdadeStr);  @ Converte para Alfa @
-vaMensagem = "Idade: " + vaIdadeStr;  @ Concatena apenas Alfas @
+IntParaAlfa(vnIdade, vaIdadeStr);  @ Converts to Alfa @
+vaMensagem = "Idade: " + vaIdadeStr;  @ Concatenate only Alfa values @
 ```
 
 Assignment across types:
 
 ```lsp
-@ Incorrect - ERRO DE TIPO @
+@ Incorrect - TYPE ERROR @
 Definir Numero vnValor;
-vnValor = "123";  @ Tentando atribuir string a número @
+vnValor = "123";  @ Trying to assign a string to a number @
 ```
 
 ```lsp
-@ Correct - CONVERSÃO ADEQUADA @
+@ Correct - PROPER CONVERSION @
 Definir Numero vnValor;
 Definir Alfa vaTexto;
 vaTexto = "123";
@@ -382,7 +382,7 @@ Truncar(vnDataHora, vnParteInteira);
 
 ```lsp
 @ Correct @
-vnParteInteira = Truncar(vnDataHora);  @ Sintaxe correta: Truncar(valor) retorna o valor truncado @
+vnParteInteira = Truncar(vnDataHora);  @ Correct syntax: Truncar(valor) returns the truncated value @
 ```
 
 Consistent direct-return usages elsewhere in the source include `vnSomenteParte = vnDataHoraAtual - Truncar(vnDataHoraAtual);`, `vnValorTruncado = Truncar(vnValor);`, and the template `vnParteInteira = Truncar(<valor>);`. So within the inspected material `Truncar(value)` returning the truncated value is consistently documented — it is an exception to L1, not a contradiction internal to `Truncar` itself. Note the L1 summary table does not list `Truncar` at all; do not rely on that table for exhaustiveness.
@@ -403,15 +403,15 @@ Solution per the source: use `MontaData()` or `CodData()` (signatures belong to 
 `FormatarData` accepts only `Numero`, not `Data` (source-faithful):
 
 ```lsp
-@ Incorrect: FormatarData NÃO aceita tipo Data @
+@ Incorrect: FormatarData does NOT accept the Data type @
 Definir Data vdData;
 DataHoje(vdData);
-FormatarData(vdData, "dd/MM/yyyy", vaData);  @ ERRO: FormatarData só aceita Numero @
+FormatarData(vdData, "dd/MM/yyyy", vaData);  @ Error: FormatarData only accepts Numero @
 
-@ Correct: FormatarData aceita apenas NUMERO (de DataHora) @
-Definir Numero vnDataHora;         @ Correto: DataHora retorna Numero @
-DataHora(vnDataHora);              @ Correto: Obtém número fracionário @
-FormatarData(vnDataHora, "dd/MM/yyyy", vaData);  @ Correto: Funciona! @
+@ Correct: FormatarData accepts only NUMERO (from DataHora) @
+Definir Numero vnDataHora;         @ Correct: DataHora returns Numero @
+DataHora(vnDataHora);              @ Correct: obtains a fractional number @
+FormatarData(vnDataHora, "dd/MM/yyyy", vaData);  @ Correct: works! @
 ```
 
 Supporting statements: `DataHora` and `DataHoraUTC` return fractional numbers, not `Data` variables; the quick guide assigns `DataHoje` to `Data` (comparisons/operations) and `DataHora` to `Numero` (formatting/math).
@@ -448,7 +448,7 @@ vaStrProcura = "Primeira linha" + vaEnter + "Segunda linha";
 The `Retorna;` command does not exist (source-faithful):
 
 ```lsp
-@ Do not use - NÃO EXISTE NA LSP @
+@ Do not use - DOES NOT EXIST in LSP @
 Mensagem(Erro, "Dado inválido");
 Retorna;
 ```
@@ -456,7 +456,7 @@ Retorna;
 Documented pattern — interrupt with `Cancel(1)` (flow-interruption semantics belong to control flow; the call form is recorded here only as the named replacement):
 
 ```lsp
-@ Correct use - PADRÃO CORRETO @
+@ Correct use - CORRECT PATTERN @
 Mensagem(Erro, "Dado inválido");
 Cancel(1);
 ```
@@ -475,9 +475,9 @@ Source statements:
 Source-faithful call forms:
 
 ```lsp
-Cancel(1); @ Cancela a execução da regra e a impressão do controle @
-Cancel(2); @ Imprime o conteúdo da variável ValStr em controles do tipo descrição e depois sai da regra @
-Cancel(3); @ Exclui o registro atual do relatório em controles do tipo fórmula @
+Cancel(1); @ Cancels the rule execution and the control printing @
+Cancel(2); @ Prints the ValStr variable content in description-type controls and then exits the rule @
+Cancel(3); @ Excludes the current report record in formula-type controls @
 ```
 
 Scope note: `ValStr`/`ValRet` mechanics and event semantics belong to later slices. Do not use `Cancel` outside a documented context on the assumption it behaves like `break`/`return` from other languages.

@@ -22,8 +22,8 @@ Only `Alfa`, `Numero`, and `Data` declarations are documented in this file. The 
 The quick-reference section repeats the core three with the same glosses:
 
 ```lsp
-Definir Alfa vaNome;        @ Texto/String @
-Definir Numero vnIdade;     @ Número (int/decimal) @
+Definir Alfa vaNome;        @ Text/String @
+Definir Numero vnIdade;     @ Number (int/decimal) @
 Definir Data vdNascimento;  @ Data @
 ```
 
@@ -95,13 +95,13 @@ Definir Numero vnIndice;
 
 vnIndice = 1;
 
-@ Valor Fixo @
+@ Fixed value @
 vaNome[1] = "Nome";
 
-@ Valor Variável @
+@ Variable value @
 vaNome[vnIndice] = "Nome";
 
-@ Valor Formula @
+@ Formula value @
 vaNome[vnIndice + 1 * 2 ] = "Nome";
 ```
 
@@ -128,7 +128,7 @@ Incorrect form (source-faithful):
 ```lsp
 @ Incorrect @
 Se (vnCondicao = 1) {
-  Definir Alfa vaVariavel;  @ Declaração no meio @
+  Definir Alfa vaVariavel;  @ Declaration in the middle @
   vaVariavel = "valor";
 }
 ```
@@ -137,7 +137,7 @@ Correct form (source-faithful):
 
 ```lsp
 @ Correct @
-Definir Alfa vaVariavel;  @ Declaração no início @
+Definir Alfa vaVariavel;  @ Declaration at the start @
 Se (vnCondicao = 1) {
   vaVariavel = "valor";
 }
@@ -182,17 +182,17 @@ Plus CamelCase after the prefix, descriptive and meaningful names.
 Examples presented as correct (source-faithful):
 
 ```lsp
-@ Variáveis Alfa @
+@ Alfa variables @
 Definir Alfa vaNomeCompleto;
 Definir Alfa vaEmailUsuario;
 Definir Alfa vaCaminhoArquivo;
 
-@ Variáveis Número @
+@ Number variables @
 Definir Numero vnIdadeUsuario;
 Definir Numero vnValorTotal;
 Definir Numero vnContadorRegistros;
 
-@ Variáveis Data @
+@ Data variables @
 Definir Data vdDataNascimento;
 Definir Data vdDataCadastro;
 Definir Data vdDataVencimento;
@@ -201,25 +201,25 @@ Definir Data vdDataVencimento;
 Minimal form (source-faithful):
 
 ```lsp
-Definir Alfa vaNome;     @ va = variável alfa @
-Definir Numero vnIdade;  @ vn = variável numero @
-Definir Data vdData;     @ vd = variável data @
+Definir Alfa vaNome;     @ va = Alfa variable @
+Definir Numero vnIdade;  @ vn = Numero variable @
+Definir Data vdData;     @ vd = Data variable @
 ```
 
 Forms the source labels incorrect **as convention violations** (source-faithful; preserved exactly, including terse names the same section otherwise discourages):
 
 ```lsp
-@ Sem prefixo @
-Definir Alfa nome; @ Incorreto @
+@ Without prefix @
+Definir Alfa nome; @ Incorrect @
 
-@ Prefixo errado @
-Definir Numero vaIdade; @ Incorreto: va é para Alfa @
+@ Wrong prefix @
+Definir Numero vaIdade; @ Incorrect: va is for Alfa @
 ```
 
 ```lsp
-@ Nomes não descritivos @
-Definir Alfa va1; @ Incorreto: não é descritivo @
-Definir Numero vnX; @ Incorreto: muito genérico @
+@ Non-descriptive names @
+Definir Alfa va1; @ Incorrect: not descriptive @
+Definir Numero vnX; @ Incorrect: too generic @
 ```
 
 Convention status: the source says variables “must follow” (devem seguir) the prefix + CamelCase pattern and lists these under rules, but never states a compiler consequence for a missing or mismatched prefix. Treat `va` / `vn` / `vd` as a required-by-standard convention for this project’s generated code, not as a proven language requirement. Do not reject or “fix” otherwise-valid LSP solely for a prefix mismatch when translating source examples.

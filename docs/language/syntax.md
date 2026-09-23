@@ -28,7 +28,7 @@ Mensagem(Retorna, vaResultadoStr);
 Minimal program (source-faithful):
 
 ```lsp
-@ Meu primeiro programa em LSP @
+@ My first LSP program @
 Definir Alfa vaMensagem;
 vaMensagem = "Olá, mundo LSP!";
 Mensagem(Retorna, vaMensagem);
@@ -61,14 +61,14 @@ Single-line block (source-faithful; `<Condição>` is a placeholder, not literal
 
 ```lsp
 Se (<Condição>)
-  vn = 1; @ Estrutura do bloco em uma linha @
+  vn = 1; @ Block structure on a single line @
 ```
 
 Block with `{ }` (source-faithful):
 
 ```lsp
 Se (<Condição>) {
-  @ Estrutura do bloco @
+  @ Block structure @
 }
 ```
 
@@ -77,7 +77,7 @@ Block with `Inicio` / `Fim;` (source-faithful):
 ```lsp
 Se (<Condição>)
 Inicio
-  @ Estrutura do bloco @
+  @ Block structure @
 Fim;
 ```
 
@@ -85,14 +85,14 @@ Documented incorrect form: omitting the parentheses around the condition (source
 
 ```lsp
 Se vnX < vnY {
-  @ Estrutura do bloco @
+  @ Block structure @
 }
 
-@ OU @
+@ OR @
 
 Se vnX < vnY
 Inicio
-  @ Estrutura do bloco @
+  @ Block structure @
 Fim;
 ```
 
@@ -123,7 +123,7 @@ Language behavior:
 Single-line comment (source-faithful):
 
 ```lsp
-@ Este é um comentário de uma linha
+@ This is a single-line comment
 Definir Numero vnX;
 ```
 
@@ -131,15 +131,15 @@ Multi-line comment (source-faithful):
 
 ```lsp
 /*
-  Este é um comentário
-  de múltiplas linhas
+  This is a
+  multi-line comment
 */
 Definir Numero vnX;
 ```
 
 > Documentation note: the source text claims there are three comment types but enumerates only the two forms above. Only these two forms are documented. Do not invent a third comment form.
 
-In examples, `@ ... @` is also used as an inline trailing annotation on the same line (for example, `Definir Alfa vaNome;        @ Texto/String @`). The source does not define separate inline-comment semantics; treat it as the same `@`-delimited comment form.
+In examples, `@ ... @` is also used as an inline trailing annotation on the same line (for example, `Definir Alfa vaNome;        @ Text/String @`). The source does not define separate inline-comment semantics; treat it as the same `@`-delimited comment form.
 
 ## Special characters and escaping
 
@@ -164,14 +164,14 @@ Language behavior:
 Example of a long single-line string presented in the source as incorrect style (source-faithful):
 
 ```lsp
-@ Incorrect - String muito longa em uma linha @
+@ Incorrect - String too long for a single line @
 Cur_Consulta.SQL "SELECT PRODUTO.NOME, PRODUTO.DESCRICAO, PRODUTO.PRECO, PRODUTO.DATA_CADASTRO, PRODUTO.ULTIMA_ATUALIZACAO, PRODUTO.ESTOQUE, PRODUTO.STATUS, CASE WHEN SYSDATE - PRODUTO.ULTIMA_ATUALIZACAO > 7 THEN 0 ELSE 1 END AS PRODUTO_ATUALIZADO FROM PRODUTOS PRODUTO, CATEGORIAS CAT WHERE CAT.COD_CATEGORIA = PRODUTO.COD_CATEGORIA AND PRODUTO.STATUS = 'A' AND PRODUTO.ESTOQUE > 0";
 ```
 
 Corresponding multi-line form with `\` continuation (source-faithful):
 
 ```lsp
-@ Correct - Quebra de linha com \ @
+@ Correct - Line break with \ @
 Cur_Consulta.SQL "SELECT PRODUTO.NOME,                               \
                         PRODUTO.DESCRICAO,                          \
                         PRODUTO.PRECO,                              \

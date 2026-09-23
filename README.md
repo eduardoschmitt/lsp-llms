@@ -1,2 +1,48 @@
 # lsp-llms
-Documentação da Linguagem Senior de Programação (LSP) otimizada para LLMs, agentes de IA e assistentes de código.
+
+LSP documentation structured for LLM consumption.
+
+`lsp-llms` transforms community documentation for **LSP — Linguagem Senior de Programação (Senior Programming Language)** into small, structured, machine-friendly reference documents in English, intended for large language models, coding agents, AI coding assistants, and retrieval systems.
+
+## Source and provenance
+
+This project does **not** define LSP. It reorganizes existing documentation.
+
+Primary source:
+
+```text
+brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
+https://github.com/brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
+```
+
+That source is community-maintained, primarily in Brazilian Portuguese. Explanatory prose here is translated into English; LSP code, keywords, function names, and identifiers are preserved unchanged.
+
+**Senior Sistemas** remains the authoritative source for official LSP and Senior product behavior. Where this project is uncertain or the source is ambiguous, it says so explicitly instead of guessing.
+
+## What is here
+
+```text
+docs/           # structured reference, one topic per file
+docs/index.md   # navigation map and coverage status
+```
+
+Planned LLM entry points (`llms.txt`, `llms-full.txt`) will be added after enough structured documentation exists and will be generated deterministically from `docs/`. They are intentionally not present yet.
+
+## How to use with AI tools
+
+1. Start at `docs/index.md` to find the relevant topic.
+2. Retrieve only the topic file needed (for example, `docs/language/syntax.md`).
+3. Treat each file as the working reference for that topic; do not infer undocumented behavior from other languages.
+4. If a behavior is marked as not documented or ambiguous, verify against official Senior documentation before relying on it.
+
+## Scope and limitations
+
+* Faithful transformation only: no invented functions, parameters, return values, syntax, or execution contexts.
+* Code examples preserve source semantics; they are not modernized or silently corrected.
+* Community conventions are labeled as conventions, not language requirements.
+* Conflicts in the source are recorded rather than silently resolved.
+* Coverage is incremental. Undocumented topics mean “not yet transformed,” not “does not exist in LSP.”
+
+## Status
+
+Early incremental build. Currently only the syntax core slice is available. See `docs/index.md` for coverage.

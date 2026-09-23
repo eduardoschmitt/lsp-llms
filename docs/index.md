@@ -7,6 +7,7 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 - [Syntax and structure](language/syntax.md) — available. Statement termination, case sensitivity, code blocks, conditions in parentheses, comments, escaping, line continuation, formatting conventions.
 - [Variables, data types, declarations, and naming](language/variables.md) — available. Documented types, `Definir` syntax, sized `Alfa`, name constraints, `va`/`vn`/`vd` convention, declaration placement, initialization guidance.
 - [Control flow](language/control-flow.md) — available. `Se`/`Senao`, `Para`, `Enquanto`, `Pare`, `Continue`, `VaPara` with labels. Includes recorded conflicts and explicitly undocumented behaviors.
+- [Arrays and indexed values](language/arrays.md) — available. Bracket declarations, indexed assignment/reads, iteration, 0-based vs 1-based evidence. Centers on the unresolved `Alfa[N]` sized-string vs. array conflict.
 
 ## Guides
 

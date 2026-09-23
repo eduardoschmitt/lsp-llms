@@ -16,6 +16,7 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 
 - [String functions](functions/strings.md) — available. Concatenation, extraction, measurement, search, substitution, insertion, deletion, whitespace, case, accent/special-character, line-splitting, delimited lists, ASCII and encoding conversion, math on `Alfa`. Conversions (`IntParaAlfa`, `AlfaParaInt`, …) deferred to a future conversion slice.
 - [Date and time functions](functions/dates-time.md) — available. Current date/time, construction, decomposition, formatting, demonstrated arithmetic and comparison, weekday/business-day functions. Includes recorded conflicts (output types, literals, masks).
+- [Type conversion functions](functions/conversion.md) — available. Evidence-only conversion matrix, Alfa/Numero/Data/masked/hour-minute conversions, observed-only date helpers, failure catalog. Intuitive names (`NumeroParaAlfa`, `AlfaParaNumero`) confirmed absent.
 
 ## Not yet transformed
 
@@ -23,7 +24,7 @@ The following domains exist in the source but have no structured file in this re
 
 - Operators
 - Function definitions and calls (beyond the control-flow and limitations excerpts)
-- Number, general conversion, and validation functions (string and date functions are done; conversions deferred)
+- Number, validation, and general helper functions (string, date, and conversion functions are done)
 - Validation and security functions
 - Cursors and database access
 - Rule lists

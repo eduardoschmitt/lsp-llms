@@ -2,84 +2,106 @@
 
 LSP documentation structured for LLM consumption.
 
-`lsp-llms` transforms community documentation for **LSP — Linguagem Senior de Programação (Senior Programming Language)** into small, structured, machine-friendly reference documents in English, intended for large language models, coding agents, AI coding assistants, and retrieval systems.
-
-## Source and provenance
-
-This project does **not** define LSP. It reorganizes existing documentation.
-
-Primary source:
-
-```text
-brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
-https://github.com/brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
-```
-
-That source is community-maintained, primarily in Brazilian Portuguese. Explanatory prose here is translated into English; LSP code, keywords, function names, and identifiers are preserved unchanged.
-
-**Senior Sistemas** remains the authoritative source for official LSP and Senior product behavior. Where this project is uncertain or the source is ambiguous, it says so explicitly instead of guessing.
+`lsp-llms` reorganizes documentation for **LSP — Linguagem Senior de Programação (Senior Programming Language)** into structured, machine-friendly reference material in English for LLMs, coding agents, AI assistants, and retrieval workflows.
 
 ## What is here
 
 ```text
 docs/           # structured reference, one topic per file
-docs/index.md   # navigation map and coverage status
-llms.txt        # generated compact entry point (do not edit)
-llms-full.txt   # generated consolidated corpus (do not edit)
-scripts/        # deterministic generator (Python 3, stdlib only)
+docs/index.md   # navigation map, evidence vocabulary, and coverage
+llms.txt        # generated compact entry point for LLMs
+llms-full.txt   # generated consolidated documentation corpus
+scripts/        # deterministic generation tooling
 ```
 
-## Generated artifacts
+The generated artifacts are reproducible from `docs/`:
 
-* `llms.txt` is the compact entry point for LLMs: project orientation plus links and short descriptions for every documentation page, derived from `docs/index.md`.
-* `llms-full.txt` is the consolidated corpus: `docs/index.md` first, then every documentation page verbatim in index order, each behind a `SOURCE:` separator.
-* Both are generated deterministically from `docs/` and must not be edited manually.
-
-Regenerate after any `docs/` change:
-
-```text
+```bash
 python scripts/build_llms.py
-```
-
-Verify the checked-in artifacts match a fresh generation (no writes):
-
-```text
 python scripts/build_llms.py --check
 ```
 
-## How to use with AI tools
+`llms.txt` provides a compact map of the available documentation.
 
-1. Start at `docs/index.md` to find the relevant topic.
-2. Retrieve only the topic file needed (for example, `docs/language/syntax.md`).
-3. Treat each file as the working reference for that topic; do not infer undocumented behavior from other languages.
-4. If a behavior is marked as not documented or ambiguous, verify against official Senior documentation before relying on it.
+`llms-full.txt` contains the complete documented corpus in deterministic order, with each source file preserved verbatim behind a `SOURCE:` marker.
 
-## Scope and limitations
+Do not edit either generated file manually.
 
-* Faithful transformation only: no invented functions, parameters, return values, syntax, or execution contexts.
-* Code examples preserve source semantics; they are not modernized or silently corrected.
-* Community conventions are labeled as conventions, not language requirements.
-* Conflicts in the source are recorded rather than silently resolved.
-* Coverage is incremental. Undocumented topics mean “not yet transformed,” not “does not exist in LSP.”
+## Using with AI tools
 
-## Status
+For focused work, start with `docs/index.md` and retrieve only the relevant topic.
 
-Early incremental build. Currently available: syntax core, variables, limitations-guardrail, control-flow, string-function, date/time, conversion, arrays, numeric/math, collections, database, files, JSON, and HTTP/web-services slices. See `docs/index.md` for coverage.
+For full-context use, provide `llms-full.txt` to the model.
+
+The documentation intentionally preserves uncertainty and contradictions found in the source material. LLMs should not infer undocumented LSP behavior from other programming languages.
+
+## Source and provenance
+
+This project does **not** define LSP.
+
+Its primary community source is:
+
+* **LSP Community Documentation by Bruno Campos**
+  https://github.com/brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
+
+The original material is primarily in Brazilian Portuguese. Explanatory documentation is translated into English while LSP code, keywords, function names, identifiers, literals, payloads, and source-specific terminology are preserved where required.
+
+**Senior Sistemas Official Documentation** remains the authoritative source for official LSP and Senior product behavior:
+
+* https://documentacao.senior.com.br/
+
+When the available evidence is incomplete, contradictory, or ambiguous, this project records that uncertainty instead of silently guessing or normalizing the language.
+
+## Documentation principles
+
+* No invented functions, parameters, return values, syntax, or execution contexts.
+* Source examples are preserved rather than silently modernized or corrected.
+* Community recommendations are distinguished from documented language behavior.
+* Conflicts are made explicit.
+* Coverage is incremental: an undocumented topic means it has not been transformed yet, not that it does not exist in LSP.
+
+See `AGENTS.md` for the full source-fidelity and contribution rules.
+
+## Current coverage
+
+The current corpus includes:
+
+* language syntax and variables;
+* control flow and arrays;
+* Lista, ListaRegra, Tabela, and Grid-related structures;
+* known limitations and generation guardrails;
+* strings;
+* dates and time;
+* conversions;
+* numeric and math functions;
+* database cursors and SQL APIs;
+* file operations;
+* JSON;
+* HTTP and Web Services.
+
+See `docs/index.md` for the canonical coverage map.
+
+## Project status
+
+The first structured corpus and deterministic `llms.txt` / `llms-full.txt` generation pipeline are available.
+
+The next phase focuses on evaluation: testing whether LLMs generate more accurate LSP when using this corpus and documenting the resulting failures, regressions, and documentation improvements.
 
 ## Acknowledgements
 
-This project was built with information and references from multiple sources. Special thanks to:
+This project was built with information and references from multiple sources.
 
-* **LSP Community Documentation by Bruno Campos** — https://github.com/brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
-* **Senior Sistemas Official Documentation** — https://documentacao.senior.com.br/
+Special thanks to:
 
-Thanks to everyone who contributes to documenting and sharing knowledge about LSP and the Senior ecosystem.
+* **Bruno Campos**, for the community LSP documentation that served as the primary transformation source.
+* **Senior Sistemas**, for the official product and language documentation.
+* Everyone who documents and shares knowledge about LSP and the Senior ecosystem.
 
-## AI Assistance
+## AI assistance
 
 This project was developed with AI-assisted engineering using:
 
-* **Muse Spark 1.3 Free** — used as the primary coding agent for repository analysis, documentation transformation, implementation, and validation.
-* **OpenAI GPT-5.6 Sol** — used for project planning, architecture decisions, prompt design, review, and validation guidance.
+* **Muse Spark 1.3 Free** — primary coding agent for repository analysis, documentation transformation, implementation, and validation.
+* **OpenAI GPT-5.6 Sol** — project planning, architecture decisions, prompt design, review, and validation guidance.
 
-AI-generated work is reviewed against the project's source material and follows the source-fidelity rules defined in `AGENTS.md`.
+AI-generated work is reviewed against the source material and follows the source-fidelity rules defined in `AGENTS.md`.

@@ -12,13 +12,17 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 
 - [Critical limitations and common pitfalls](guides/limitations.md) — available. Output-parameter calls, no-manipulation-in-parameters rule, `Mensagem` rules and payload ban, grid/table and `SQL_Retornar` restrictions, concatenation/type rules, `Truncar`, date pitfalls, non-existent constructs, `Cancel` contexts. Includes recorded documentation conflicts.
 
+## Functions
+
+- [String functions](functions/strings.md) — available. Concatenation, extraction, measurement, search, substitution, insertion, deletion, whitespace, case, accent/special-character, line-splitting, delimited lists, ASCII and encoding conversion, math on `Alfa`. Conversions (`IntParaAlfa`, `AlfaParaInt`, …) deferred to a future conversion slice.
+
 ## Not yet transformed
 
 The following domains exist in the source but have no structured file in this repository yet. Do not treat their absence as a statement about LSP.
 
 - Operators
 - Function definitions and calls (beyond the control-flow and limitations excerpts)
-- String, date, number, and conversion functions
+- String, date, number, and general conversion functions (string-manipulation functions are done; conversions deferred)
 - Validation and security functions
 - Cursors and database access
 - Rule lists

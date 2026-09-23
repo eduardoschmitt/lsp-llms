@@ -126,7 +126,7 @@ Documented recommendation with error-avoidance rationale:
 Incorrect form (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 Se (vnCondicao = 1) {
   Definir Alfa vaVariavel;  @ Declaração no meio @
   vaVariavel = "valor";
@@ -136,7 +136,7 @@ Se (vnCondicao = 1) {
 Correct form (source-faithful):
 
 ```lsp
-@ ✅ CORRETO @
+@ Correct @
 Definir Alfa vaVariavel;  @ Declaração no início @
 Se (vnCondicao = 1) {
   vaVariavel = "valor";
@@ -146,12 +146,12 @@ Se (vnCondicao = 1) {
 Related undeclared-variable fix (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 DecodData(vdData, vnDia, vnMes, vnAno);
 ```
 
 ```lsp
-@ ✅ CORRETO @
+@ Correct @
 Definir Numero vnDia;
 Definir Numero vnMes;
 Definir Numero vnAno;

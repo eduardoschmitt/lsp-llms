@@ -164,14 +164,14 @@ Language behavior:
 Example of a long single-line string presented in the source as incorrect style (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO - String muito longa em uma linha @
+@ Incorrect - String muito longa em uma linha @
 Cur_Consulta.SQL "SELECT PRODUTO.NOME, PRODUTO.DESCRICAO, PRODUTO.PRECO, PRODUTO.DATA_CADASTRO, PRODUTO.ULTIMA_ATUALIZACAO, PRODUTO.ESTOQUE, PRODUTO.STATUS, CASE WHEN SYSDATE - PRODUTO.ULTIMA_ATUALIZACAO > 7 THEN 0 ELSE 1 END AS PRODUTO_ATUALIZADO FROM PRODUTOS PRODUTO, CATEGORIAS CAT WHERE CAT.COD_CATEGORIA = PRODUTO.COD_CATEGORIA AND PRODUTO.STATUS = 'A' AND PRODUTO.ESTOQUE > 0";
 ```
 
 Corresponding multi-line form with `\` continuation (source-faithful):
 
 ```lsp
-@ ✅ CORRETO - Quebra de linha com \ @
+@ Correct - Quebra de linha com \ @
 Cur_Consulta.SQL "SELECT PRODUTO.NOME,                               \
                         PRODUTO.DESCRICAO,                          \
                         PRODUTO.PRECO,                              \
@@ -186,7 +186,7 @@ Cur_Consulta.SQL "SELECT PRODUTO.NOME,                               \
                    AND PRODUTO.ESTOQUE > 0";
 ```
 
-The ✅/❌ marks above are source style guidance about readability, not compiler errors. The SQL text itself is an embedded database query, not LSP syntax; do not treat table names, columns, or SQL dialect features as LSP behavior.
+The Correct/Incorrect marks above are source style guidance about readability, not compiler errors. The SQL text itself is an embedded database query, not LSP syntax; do not treat table names, columns, or SQL dialect features as LSP behavior.
 
 ## Formatting conventions (not language requirements)
 
@@ -194,7 +194,7 @@ The following are documented as community/Senior standards or recommendations. D
 
 - **Indentation:** 2 spaces per level (described as the Senior standard, “ao invés de 4”). Example blocks in the source consistently use 2 spaces.
 - **Continuation layout:** place the continuing `\` around column 80, align continued columns for readability, keep spacing consistent, and indent 2 spaces per level.
-- **Comment markers with emoji labels** (for example, `@ ❌ INCORRETO @`, `@ ✅ CORRETO @`) are documentation style in the source, not a language feature.
+- **Comment markers with correctness labels** (for example, `@ Incorrect @`, `@ Correct @`) are documentation style in the source, not a language feature.
 
 ## Common mistakes preserved from the source
 

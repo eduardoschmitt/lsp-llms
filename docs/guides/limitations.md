@@ -163,7 +163,7 @@ Se (ArqExiste(vaCaminho)) {
 ```
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 Se (EstaNulo(vaDado, vnEhNulo) = 0) {  @ Função não retorna valor @
 ```
 
@@ -185,7 +185,7 @@ Se (vnArquivoExiste = 1) {
 ```
 
 ```lsp
-@ ✅ CORRETO @
+@ Correct @
 EstaNulo(vaDado, vnEhNulo);  @ Executa função primeiro @
 Se (vnEhNulo = 0) {          @ Compara variável preenchida @
 ```
@@ -305,7 +305,7 @@ Golden rule for grids: always use an intermediate variable for conversions in gr
 `SQL_Retornar` parameter restriction (critical rule): NEVER use `p`-prefixed function-parameter variables directly in `SQL_Retornar*` calls — Senior does not return values into them. Use locals, then assign to the parameters (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO - NÃO FUNCIONA @
+@ Incorrect - NÃO FUNCIONA @
 Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
   SQL_RetornarInteiro(xCursor, "CODIGO", pCodigo);      @ ERRO: não retorna valor @
   SQL_RetornarInteiro(xCursor, "RESULTADO", pResultado); @ ERRO: não retorna valor @
@@ -313,7 +313,7 @@ Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
 ```
 
 ```lsp
-@ ✅ CORRETO - FUNCIONA @
+@ Correct - FUNCIONA @
 Funcao minhaFuncao(Numero pCodigo, Numero End pResultado); {
   Definir Numero vnCodigoTemp;
   Definir Numero vnResultadoTemp;
@@ -334,7 +334,7 @@ Classification: **Documented limitation**; examples also serve as **Common error
 Concatenation (source “REGRA CRÍTICA”: only `Alfa` variables can be concatenated):
 
 ```lsp
-@ ❌ INCORRETO - ERRO DE CONCATENAÇÃO @
+@ Incorrect - ERRO DE CONCATENAÇÃO @
 Definir Numero vnIdade;
 Definir Alfa vaMensagem;
 vnIdade = 25;
@@ -342,7 +342,7 @@ vaMensagem = "Idade: " + vnIdade;  @ ERRO: Numero não concatena @
 ```
 
 ```lsp
-@ ✅ CORRETO - CONVERSÃO ANTES DA CONCATENAÇÃO @
+@ Correct - CONVERSÃO ANTES DA CONCATENAÇÃO @
 Definir Numero vnIdade;
 Definir Alfa vaIdadeStr;
 Definir Alfa vaMensagem;
@@ -354,13 +354,13 @@ vaMensagem = "Idade: " + vaIdadeStr;  @ Concatena apenas Alfas @
 Assignment across types:
 
 ```lsp
-@ ❌ INCORRETO - ERRO DE TIPO @
+@ Incorrect - ERRO DE TIPO @
 Definir Numero vnValor;
 vnValor = "123";  @ Tentando atribuir string a número @
 ```
 
 ```lsp
-@ ✅ CORRETO - CONVERSÃO ADEQUADA @
+@ Correct - CONVERSÃO ADEQUADA @
 Definir Numero vnValor;
 Definir Alfa vaTexto;
 vaTexto = "123";
@@ -376,12 +376,12 @@ Classification: **Documented limitation** (two-argument form) + **Documentation 
 Source troubleshooting (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 Truncar(vnDataHora, vnParteInteira);
 ```
 
 ```lsp
-@ ✅ CORRETO @
+@ Correct @
 vnParteInteira = Truncar(vnDataHora);  @ Sintaxe correta: Truncar(valor) retorna o valor truncado @
 ```
 
@@ -394,7 +394,7 @@ Classification: **Documented limitation** (literal ban, `FormatarData` input typ
 No direct date literal (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 vdData = 15/08/1990;
 ```
 
@@ -403,18 +403,18 @@ Solution per the source: use `MontaData()` or `CodData()` (signatures belong to 
 `FormatarData` accepts only `Numero`, not `Data` (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO: FormatarData NÃO aceita tipo Data @
+@ Incorrect: FormatarData NÃO aceita tipo Data @
 Definir Data vdData;
 DataHoje(vdData);
 FormatarData(vdData, "dd/MM/yyyy", vaData);  @ ERRO: FormatarData só aceita Numero @
 
-@ ✅ CORRETO: FormatarData aceita apenas NUMERO (de DataHora) @
+@ Correct: FormatarData aceita apenas NUMERO (de DataHora) @
 Definir Numero vnDataHora;         @ Correto: DataHora retorna Numero @
 DataHora(vnDataHora);              @ Correto: Obtém número fracionário @
 FormatarData(vnDataHora, "dd/MM/yyyy", vaData);  @ Correto: Funciona! @
 ```
 
-Supporting statements: `DataHora` and `DataHoraUTC` return fractional numbers, not `Data` variables; the quick guide assigns `DataHoje` → `Data` (comparisons/operations) and `DataHora` → `Numero` (formatting/math).
+Supporting statements: `DataHora` and `DataHoraUTC` return fractional numbers, not `Data` variables; the quick guide assigns `DataHoje` to `Data` (comparisons/operations) and `DataHora` to `Numero` (formatting/math).
 
 Conflict: one `EntradaValor` date example fills a `Numero` variable with `DataHoje`:
 
@@ -423,7 +423,7 @@ Definir Numero vnDataHoje;
 DataHoje(vnDataHoje);
 ```
 
-against many `Data`-typed `DataHoje(vdData…)` examples and the guide table (`DataHoje` → Tipo Data). Whether `DataHoje` can fill a `Numero` is unresolved in the inspected material — follow the `Data`-typed form, which has the explicit correct example above.
+against many `Data`-typed `DataHoje(vdData…)` examples and the guide table (where `DataHoje` is listed as returning Tipo Data). Whether `DataHoje` can fill a `Numero` is unresolved in the inspected material — follow the `Data`-typed form, which has the explicit correct example above.
 
 ## L10 — Non-existent constructs from other languages
 
@@ -432,14 +432,14 @@ Classification: **Documented limitation** (each item explicitly “does not exis
 `Chr()` does not exist in LSP (source-faithful):
 
 ```lsp
-@ ❌ INCORRETO @
+@ Incorrect @
 vaStrProcura = "Primeira linha" + Chr(13) + Chr(10) + "Segunda linha";
 ```
 
 Named alternative (no signature documented in the inspected sections; belongs to the function catalog):
 
 ```lsp
-@ ✅ CORRETO @
+@ Correct @
 Definir Alfa vaEnter;
 CaracterParaAlfa(13, vaEnter);
 vaStrProcura = "Primeira linha" + vaEnter + "Segunda linha";
@@ -448,7 +448,7 @@ vaStrProcura = "Primeira linha" + vaEnter + "Segunda linha";
 The `Retorna;` command does not exist (source-faithful):
 
 ```lsp
-@ ❌ NUNCA USE - NÃO EXISTE NA LSP @
+@ Do not use - NÃO EXISTE NA LSP @
 Mensagem(Erro, "Dado inválido");
 Retorna;
 ```
@@ -456,7 +456,7 @@ Retorna;
 Documented pattern — interrupt with `Cancel(1)` (flow-interruption semantics belong to control flow; the call form is recorded here only as the named replacement):
 
 ```lsp
-@ ✅ SEMPRE USE - PADRÃO CORRETO @
+@ Correct use - PADRÃO CORRETO @
 Mensagem(Erro, "Dado inválido");
 Cancel(1);
 ```

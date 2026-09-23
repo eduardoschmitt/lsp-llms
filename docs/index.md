@@ -6,6 +6,7 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 
 - [Syntax and structure](language/syntax.md) — available. Statement termination, case sensitivity, code blocks, conditions in parentheses, comments, escaping, line continuation, formatting conventions.
 - [Variables, data types, declarations, and naming](language/variables.md) — available. Documented types, `Definir` syntax, sized `Alfa`, name constraints, `va`/`vn`/`vd` convention, declaration placement, initialization guidance.
+- [Control flow](language/control-flow.md) — available. `Se`/`Senao`, `Para`, `Enquanto`, `Pare`, `Continue`, `VaPara` with labels. Includes recorded conflicts and explicitly undocumented behaviors.
 
 ## Guides
 
@@ -16,7 +17,7 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 The following domains exist in the source but have no structured file in this repository yet. Do not treat their absence as a statement about LSP.
 
 - Operators
-- Control flow (`Se`, `Senao`, `Para`, `Enquanto`, `Pare`, `Continue`, `VaPara`, `Cancel`)
+- Function definitions and calls (beyond the control-flow and limitations excerpts)
 - String, date, number, and conversion functions
 - Validation and security functions
 - Cursors and database access

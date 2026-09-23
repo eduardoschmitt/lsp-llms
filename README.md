@@ -45,4 +45,13 @@ Planned LLM entry points (`llms.txt`, `llms-full.txt`) will be added after enoug
 
 ## Status
 
-Early incremental build. Currently available: syntax core, variables, and limitations-guardrail slices. See `docs/index.md` for coverage.
+Early incremental build. Currently available: syntax core, variables, limitations-guardrail, and control-flow slices. See `docs/index.md` for coverage.
+
+## Acknowledgements
+
+This project was built with information and references from multiple sources. Special thanks to:
+
+* **LSP Community Documentation by Bruno Campos** — https://github.com/brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao
+* **Senior Sistemas Official Documentation** — https://documentacao.senior.com.br/
+
+Thanks to everyone who contributes to documenting and sharing knowledge about LSP and the Senior ecosystem.

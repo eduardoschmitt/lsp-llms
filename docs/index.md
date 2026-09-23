@@ -29,6 +29,10 @@ Coverage map for the structured LSP reference. Each entry states whether the top
 
 - [File operations](io/files.md) — available. Handle-based text I/O, whole-file loading, existence checks, line counting, temp files. Open-mode and `ArqExiste` conflicts preserved; encoding/newlines undocumented.
 
+## Integration
+
+- [HTTP and web services](integration/http-webservices.md) — available. `Http*` helpers (verbs, headers, status, cookies, proxy, SSL, timeout, download, auth), Senior WS ports with grids. Expression-in-parameter contradictions preserved.
+
 ## Data
 
 - [JSON handling](data/json.md) — available. `Alfa` representation, `ValorElementoJson` single-field reads, `ListaRegraCarregarJson` collections, manual string scanning. Indexed paths rejected; no builder API; null/boolean undocumented.
@@ -42,7 +46,7 @@ The following domains exist in the source but have no structured file in this re
 - Validation and security functions (string, date, conversion, numeric, and database functions are done)
 - Rule lists (core `ListaRegra` in collections; full catalog deferred)
 - Report Generator functions
-- Files, Web Service, and HTTP integration (file operations and JSON are done)
+- Files, Web Service, and HTTP integration (file operations, JSON, and HTTP/web-services are done)
 - User interface (`Mensagem`, `EntradaValor`, `Cancel`)
 - System variables and execution contexts
 - Worked examples, patterns, and remaining troubleshooting (beyond the guardrail subset in the limitations guide)

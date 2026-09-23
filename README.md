@@ -55,3 +55,12 @@ This project was built with information and references from multiple sources. Sp
 * **Senior Sistemas Official Documentation** — https://documentacao.senior.com.br/
 
 Thanks to everyone who contributes to documenting and sharing knowledge about LSP and the Senior ecosystem.
+
+## AI Assistance
+
+This project was developed with AI-assisted engineering using:
+
+* **Muse Spark 1.3 Free** — used as the primary coding agent for repository analysis, documentation transformation, implementation, and validation.
+* **OpenAI GPT-5.6 Sol** — used for project planning, architecture decisions, prompt design, review, and validation guidance.
+
+AI-generated work is reviewed against the project's source material and follows the source-fidelity rules defined in `AGENTS.md`.

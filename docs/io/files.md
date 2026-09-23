@@ -48,6 +48,8 @@ vnArquivo = Abrir(vaArquivo, "LerNL");
 
 No unifying rule for mode values is documented — bare words and one string spelling coexist without explanation. Modes beyond `Ler`, `Gravar`, `Lernl`, `Gravarnl`, and `"LerNL"` are undocumented. Return behavior: direct return into a variable in every occurrence.
 
+Evaluation-verified correspondence (Senior Gestão Empresarial, 5.10.4.9): open mode must match the operation family — `Gravarnl` mode with `Gravarnl` calls and `Lernl` mode with `Lernl` calls compiled and executed, while mixing `Gravar` mode with `Gravarnl` calls failed at runtime (`Operação inválido para arquivos abertos para escrita alfanumérica`). See `evals/backend-generation-v0.1/results/gemini-3-1-pro-low/B02.corrected-modes.result.md`. Version-pinned observation, not a universal specification.
+
 ## Ler and Lernl
 
 `Ler` purpose: read a stated character count from the handle's file into a variable.
@@ -220,7 +222,7 @@ Se (vnExisteArquivo = 1) {
 }
 ```
 
-Documentation conflict (preserved, linked to `../guides/limitations.md` L4): the 2-argument output-parameter form above is the specified one, yet presented-as-working examples also use `Se (ArqExiste(vaCaminhoArquivo) = 1)` and even bare `Se ((vaArquivo <> "") e (ArqExiste(vaArquivo)))`. The 1-argument direct forms appear both in documented-incorrect blocks (`vnExiste = ArqExiste(vaCaminho);`) and in working examples — unresolved. Follow the 2-argument form.
+Documentation conflict (preserved, linked to `../guides/limitations.md` L4): the 2-argument output-parameter form above is the specified one, yet presented-as-working examples also use `Se (ArqExiste(vaCaminhoArquivo) = 1)` and even bare `Se ((vaArquivo <> "") e (ArqExiste(vaArquivo)))`. The 1-argument direct forms appear both in documented-incorrect blocks (`vnExiste = ArqExiste(vaCaminho);`) and in working examples — unresolved. Version evidence: on Senior Gestão Empresarial 5.10.4.9 the 2-argument call was rejected (`Muitos parâmetros na chamada da função "ARQEXISTE"`) while the 1-argument form executed and reported correctly (see `evals/backend-generation-v0.1/results/gemini-3-1-pro-low/B02.result.md`). Follow the 2-argument form unless targeting that verified environment.
 
 ## LinhasArquivo
 

@@ -1,0 +1,4 @@
+This directory will hold the single-model execution record once the
+Gemini 3.1 Pro (Low) run happens: prompt used, verbatim response, stage
+outcomes, diagnosis, and any corrections as separate records.
+See ../README.md for the protocol.

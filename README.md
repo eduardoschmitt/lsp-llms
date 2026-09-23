@@ -88,6 +88,17 @@ The first structured corpus and deterministic `llms.txt` / `llms-full.txt` gener
 
 The next phase focuses on evaluation: testing whether LLMs generate more accurate LSP when using this corpus and documenting the resulting failures, regressions, and documentation improvements.
 
+## Tested environment
+
+Evaluation runs so far were executed against:
+
+```text
+Product: Senior Gestão Empresarial
+Version: 5.10.4.9
+```
+
+LSP APIs, signatures, and behaviors can vary between Senior ecosystem versions. Empirical results under `evals/` are valid for the recorded environment and must not be automatically treated as universal. See `evals/README.md` for the environment policy.
+
 ## Acknowledgements
 
 This project was built with information and references from multiple sources.

@@ -34,3 +34,13 @@ evals/
 - A model failure never automatically triggers a documentation change. Failures
   are diagnosed, classified against the current docs, and only then may motivate
   a docs improvement through the normal project workflow.
+
+## Evaluation environment
+
+Every suite records the concrete Senior environment its runs were executed
+in (product and version), because LSP APIs, signatures, and behaviors can
+vary between Senior ecosystem versions. Empirical results are valid for the
+recorded environment and must not be automatically treated as universal.
+Known example: `backend-generation-v0.1` ran on Senior Gestão Empresarial
+5.10.4.9, where a version-dependent `ArqExiste` arity divergence was
+observed.

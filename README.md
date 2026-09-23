@@ -24,9 +24,28 @@ That source is community-maintained, primarily in Brazilian Portuguese. Explanat
 ```text
 docs/           # structured reference, one topic per file
 docs/index.md   # navigation map and coverage status
+llms.txt        # generated compact entry point (do not edit)
+llms-full.txt   # generated consolidated corpus (do not edit)
+scripts/        # deterministic generator (Python 3, stdlib only)
 ```
 
-Planned LLM entry points (`llms.txt`, `llms-full.txt`) will be added after enough structured documentation exists and will be generated deterministically from `docs/`. They are intentionally not present yet.
+## Generated artifacts
+
+* `llms.txt` is the compact entry point for LLMs: project orientation plus links and short descriptions for every documentation page, derived from `docs/index.md`.
+* `llms-full.txt` is the consolidated corpus: `docs/index.md` first, then every documentation page verbatim in index order, each behind a `SOURCE:` separator.
+* Both are generated deterministically from `docs/` and must not be edited manually.
+
+Regenerate after any `docs/` change:
+
+```text
+python scripts/build_llms.py
+```
+
+Verify the checked-in artifacts match a fresh generation (no writes):
+
+```text
+python scripts/build_llms.py --check
+```
 
 ## How to use with AI tools
 

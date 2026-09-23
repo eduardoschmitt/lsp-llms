@@ -45,4 +45,4 @@ Planned LLM entry points (`llms.txt`, `llms-full.txt`) will be added after enoug
 
 ## Status
 
-Early incremental build. Currently available: syntax core and variables slices. See `docs/index.md` for coverage.
+Early incremental build. Currently available: syntax core, variables, and limitations-guardrail slices. See `docs/index.md` for coverage.

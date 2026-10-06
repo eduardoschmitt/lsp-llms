@@ -224,6 +224,43 @@ Definir Numero vnX; @ Incorrect: too generic @
 
 Convention status: the source says variables "must follow" (devem seguir) the prefix + CamelCase pattern and lists these under rules, but never states a compiler consequence for a missing or mismatched prefix. Treat `va` / `vn` / `vd` as a required-by-standard convention for this project's generated code, not as a proven language requirement. Do not reject or "fix" otherwise-valid LSP solely for a prefix mismatch when translating source examples.
 
+## Production naming conventions: `a` / `n` / `d`, `e`, `str`, `x` (project guidance)
+
+Classification: **Project guidance** — naming advice from this project based on verified production code, not compiler semantics. The `va` / `vn` / `vd` convention above is what the community source documents; the conventions below reflect what production code in this project's environment actually uses. Neither form is a proven language requirement.
+
+| Prefix | Meaning | Status |
+|---|---|---|
+| `a` | Alfa | Preferred for new code |
+| `n` | Numero | Preferred for new code |
+| `d` | Data | Preferred for new code |
+| `e` | Input parameter | Common in reports; denotes the parameter role, not a data type |
+| `str` | Alfa | Recognized alternative |
+| `x` | Numero | Recognized alternative |
+
+Other conventions, such as `vn` or `va`, exist in third-party and community code but are not the preferred style for new code in this project's environment.
+
+Rules for generation:
+
+- Generate new code using `a`, `n`, and `d` by default.
+- Recognize alternative conventions (`va` / `vn` / `vd`, `str`, `x`) without treating them as invalid.
+- Preserve existing conventions when modifying legacy code; do not rename working identifiers to fit the preferred style.
+- Do not confuse naming prefixes with language-level typing: a prefix never declares or guarantees a type. Only `Definir <Tipo> <Nome>;` establishes the type.
+- The `e` prefix represents an input parameter, not a specific data type. Do not infer a variable's type from an `e` prefix.
+- Do not present these conventions as mandatory Senior syntax. Prefixes are a readability convention, not a compiler rule.
+
+Naming examples (project guidance; these illustrate names only, not database field types):
+
+```lsp
+Definir Alfa aCodPro;
+Definir Alfa aCodOri;
+Definir Numero nQuantidade;
+Definir Data dDataAnterior;
+```
+
+These examples prove nothing about similarly named database fields: a variable named `aCodPro` being `Alfa` does not by itself establish any column's type. Field types come from Senior ERP metadata or verified production usage, never from names or numeric-looking values.
+
+Provenance: production code excerpts provided by the project maintainer (observed in the production cursor patterns in `../database/cursors-sql.md`). The inspected community source documents only `va` / `vn` / `vd` (plus `x`-prefixed handles such as `xCursor` / `xNumero` / `xBlob` in cursor examples and `str`-prefixed parameter names in `ProcuraEnter`); `a` / `n` / `d` / `e` prefixes are not documented in the inspected community source. Senior Sistemas is the authoritative source for official behavior.
+
 ## Deliberately not inferred
 
 From the inspected sections, the following are not documented and must not be filled in:

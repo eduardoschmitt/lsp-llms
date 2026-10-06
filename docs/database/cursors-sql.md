@@ -35,7 +35,16 @@ curExemplo.FecharCursor();
 
 So: `Achou` is read as a property in the loop condition and `Proximo()` as a method call — both attached to the cursor with dot syntax. Field reads use the same dot form (`curExemplo.Campo`), matching the `Lista` field-access shape documented in `collections.md` (name overlap only, not shared semantics). No destruction call exists for this mechanism.
 
-Parameters use `__inserir(:var)` inside the `.SQL` string (source-faithful):
+### Simple-cursor parameters: direct `:variable` for values, `__Inserir` for dynamic fragments
+
+Classification: **Project guidance** backed by **production excerpts** below and **source corroboration**. An earlier revision of this file presented `__inserir(:var)` as the parameter form; that framing was incorrect guidance and is corrected here. The source-faithful `__inserir` example underneath is preserved exactly as found, with its role clarified.
+
+- Prefer direct `:variable` references inside the `.SQL` string for ordinary values (company codes, branch codes, product codes, dates, context-provided identifiers). This is the normal parameter form for simple cursors.
+- Do NOT wrap simple values in `__Inserir(...)`. In particular, do not generate `WHERE CODPRO = __Inserir(:aCodPro)` when `:aCodPro` alone is the verified production pattern.
+- Reserve `__Inserir(:var)` for dynamic SQL fragments: pieces of SQL text assembled at runtime, such as `ORDER BY` clauses or abrangencia (user-coverage) restriction strings. Source corroboration: the community source's `R038HSA` report example binds ordinary filters directly (`WHERE NUMEMP = :xnumemp AND TIPCOL = :xtipcol AND NUMCAD = :xnumcad`) while inserting only the assembled coverage fragment with `__Inserir(:xAbrMot)`; likewise its `R034FUN` example inserts an `ORDER BY` fragment (`__inserir(:vaOrderBy)` where `vaOrderBy = "ORDER BY CODFIL"`).
+- `__Inserir` is therefore legitimate and documented — it is not universally invalid. The correction is about scope: values go through `:variable`; SQL text fragments go through `__Inserir(:var)`.
+
+Source-faithful `__inserir` example (preserved exactly as found; annotation added):
 
 ```lsp
 Definir Cursor C;
@@ -56,7 +65,102 @@ se (C.Achou) {
 C.FecharCursor();
 ```
 
-Note: that example contains a `// ...existing code...` line. `//` is not a documented LSP comment form (only `@ ... @` and `/* ... */` are); it is preserved exactly as found and reads as an editorial placeholder, not LSP evidence.
+Reading note: this source example wraps even plain values (`__inserir(:vnCodEmp)`, `__inserir(:vnCodFil)`) and is presented-as-documented, not as the preferred production pattern — prefer `:vnCodEmp` / `:vnCodFil` for such values. Only the trailing `__inserir(:vaOrderBy)` (a dynamic `ORDER BY` fragment) matches the legitimate dynamic-SQL use. The `// ...existing code...` line is preserved exactly as found; `//` is not a documented LSP comment form (only `@ ... @` and `/* ... */` are) and reads as an editorial placeholder, not LSP evidence.
+
+### Production pattern A — product lookup by `CODPRO` (production excerpt)
+
+The following is a real production excerpt provided by the project maintainer, reproduced with only the explanatory comment translated. It is not a standalone program: it has no rule wrapper and its input comes from the surrounding production rule.
+
+```lsp
+@ Get the OP origin through the Product Code @
+Definir Cursor Cur_E075DER;
+Definir Alfa aCodOri;
+
+Cur_E075DER.Sql "SELECT CODORI FROM E075PRO WHERE CODEMP = 1 AND CODPRO =:aCodPro";
+Cur_E075DER.AbrirCursor();
+Se (Cur_E075DER.Achou) {
+  aCodOri = Cur_E075DER.CodOri;
+  Cur_E075DER.Proximo();
+}
+Cur_E075DER.FecharCursor();
+```
+
+Production-reported facts (maintainer-provided; not community-source claims):
+
+- `E075PRO.CODPRO` is an `Alfa` field in Senior ERP. Previously generated code declared the input as `Numero`; that was wrong and must not be repeated.
+- `aCodPro` is an `Alfa` variable supplied by the surrounding production rule; it is not declared in this excerpt.
+- The cursor passes it directly as `:aCodPro`. No `__Inserir` is used.
+- `Se (Cur_E075DER.Achou)` reads the `Achou` property in a condition, matching the documented simple-cursor shape (`Enquanto (curExemplo.Achou)` above).
+
+Do not infer beyond the excerpt:
+
+- Do not invent a `Numero` declaration for `aCodPro`. When a self-contained educational example is needed, declare it explicitly as `Alfa` with a string value and mark the example as adapted rather than production-verbatim.
+- Do not rename `Cur_E075DER` merely because it queries `E075PRO`; cursor names need not match table names.
+- Do not treat `Proximo()` after a single-row read as a mandatory pattern for every single-row query.
+- Do not generalize "`CODPRO` is `Alfa`" to other tables or fields. Never infer a field's type from its name or from numeric-looking values.
+
+Self-contained adapted form (project guidance; adapted, not production-verbatim):
+
+```lsp
+Definir Cursor Cur_E075DER;
+Definir Alfa aCodPro;
+Definir Alfa aCodOri;
+
+aCodPro = "EXAMPLE-PRODUCT";
+Cur_E075DER.Sql "SELECT CODORI FROM E075PRO WHERE CODEMP = 1 AND CODPRO =:aCodPro";
+Cur_E075DER.AbrirCursor();
+Se (Cur_E075DER.Achou) {
+  aCodOri = Cur_E075DER.CodOri;
+  Cur_E075DER.Proximo();
+}
+Cur_E075DER.FecharCursor();
+```
+
+### Production pattern B — context-provided company/branch variables and date handling (production excerpt)
+
+Another real production excerpt from the same source. It is not a complete, independently executable program: some declarations belong to other parts of the original production rule.
+
+```lsp
+Definir Data dDataAnterior;
+Definir Data dDataS17;
+
+Definir Cursor Cur_E070FIL;
+Definir Cursor Cur_E210MVP;
+Definir Cursor Cur_PrecoMedioS9;
+
+@ Assign to dDataAnterior the 1st day of the month before closing @
+Cur_E070FIL.Sql "SELECT ESTPDI FROM E070FIL WHERE CODEMP=:VSCodEmp AND CODFIL=:VSFilDep";
+Cur_E070FIL.AbrirCursor();
+dDataAnterior = Cur_E070FIL.EstPdi;
+Cur_E070FIL.FecharCursor();
+
+DesmontaData(dDataAnterior,dia,mes,ano);
+mes = mes - 1;
+
+Se (mes = 0) {
+  mes = 12;
+  ano = ano - 1;
+}
+
+MontaData(1, mes, ano, dDataAnterior);
+```
+
+Production-reported facts:
+
+- `:VSCodEmp` and `:VSFilDep` are identifiers supplied by the surrounding execution context (rule/report environment). They are used directly as `:variable` parameters — no `__Inserir`, no redeclaration, no renaming. Preserve context-provided names exactly.
+- The excerpt demonstrates ordinary cursor value reads (`dDataAnterior = Cur_E070FIL.EstPdi;`) and date decomposition/reconstruction around the query. `MontaData` / `DesMontaData` signatures are documented in `../functions/dates-time.md`.
+- Spelling note: `DesmontaData` here vs `DesMontaData` in the community source. LSP identifiers are documented as case-insensitive (`../language/syntax.md`), so this is a spelling variant of the same function, not a different function.
+- `dia`, `mes`, and `ano` have no declarations in the excerpt; they come from the surrounding rule. In self-contained code, declare them at the top (e.g. `Definir Numero` for each) per the declaration-placement rule in `../language/variables.md`.
+- Unused declarations in the excerpt (`dDataS17`, `Cur_E210MVP`, `Cur_PrecoMedioS9`) belong to other parts of the original production rule. Do not assume every declaration in a production excerpt is used by the visible fragment.
+
+Generation rules from these patterns (project guidance):
+
+1. Prefer `:variable` for ordinary cursor SQL parameters.
+2. Avoid unnecessary `__Inserir` for simple values; keep `__Inserir` for dynamic SQL construction where the source documents it.
+3. Recognize variables supplied by the execution context; preserve their names and avoid unnecessary redeclarations.
+4. Respect actual Senior ERP database field types when verified by production evidence.
+5. Never guess field types based on names or numeric-looking values.
+6. Keep SQL examples faithful to verified production patterns rather than plausible reconstructions.
 
 ## Complete cursor lifecycle
 
@@ -444,8 +548,11 @@ None of the deferred `ListaRegra*` catalog (search, extended navigation, row add
 - Choose one mechanism per cursor and preserve its exact lifecycle; never cross the simple/complete call forms.
 - Declare complete-cursor handles as `Definir Alfa`; bind with the matching `SQL_Definir*` before opening.
 - Always `SQL_FecharCursor` + `SQL_Destruir`; never skip cleanup.
+- For simple cursors, pass ordinary values as direct `:variable` references; reserve `__Inserir(:var)` for dynamic SQL text fragments (see the simple-cursor parameters section).
 - Match `:name` placeholders with `SQL_Definir*(xCursor, "name", value)`; use per-tool Senior-2/native settings deliberately.
 - Return columns only into plain variables of matching kind via the type-specific function; never into `p`-parameters or Grid/Table fields without the intermediate-variable pattern.
+- Preserve context-provided variable names (`:VSCodEmp`, `:VSFilDep`, and similar); never redeclare or rename them.
+- Never guess database field types from names or values; follow production-verified types where recorded.
 - Never invent type mappings, transaction semantics, or error diagnostics.
 
 All guidance is project caution unless independently backed above.
@@ -465,6 +572,8 @@ All guidance is project caution unless independently backed above.
 3. `Se (vnCodRes >= 200)`-style HTTP-adjacent checks are not SQL; no confusion introduced here, but `SQL_Proximo`-in-`Se` never appears — iteration is always EOF-loop demonstrated.
 4. `SQL_Criar` handle described as Alfa-only while simple-cursor handles are `Cursor`-typed; no unified handle model exists.
 5. No cleanup-failure, double-destroy, empty-result, or invalid-SQL diagnostics are documented beyond the auto-cancel note and `ExecSQLEx` status outputs.
+6. The community source's `R034FUN` example wraps plain simple-cursor values in `__inserir(...)`, while verified production patterns pass the same kind of values directly (`:aCodPro`, `:VSCodEmp`). The source form is preserved as presented-as-documented; the direct form is the preferred production pattern. Not resolved beyond that scoping.
+7. `E075PRO.CODPRO`-is-`Alfa` and the `:VSCodEmp` / `:VSFilDep` context variables are maintainer-provided production reports, not community-source statements. They are scoped to exactly what was observed; no general Senior ERP schema claim follows.
 
 ## Deliberately not documented
 
@@ -472,4 +581,4 @@ Result ordering, locking, isolation, fetch sizes, connection pooling, timeouts, 
 
 ## Provenance
 
-Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Definição de Cursor` in full (simple/complete patterns, no-mixing table, trade-offs, return-function catalog with quick reference, BOF/EOF control functions, observations, optimization guide with limitation table), `Funções SQL` in full (function table, `SQL_Criar` lifecycle with native/JOIN rules, placeholder security rule with naming convention and full example, SQL Senior 2 activation/restrictions, INSERT/SELECT/UPDATE examples, `__inserir` and `SQL_Definir` parameter passing, `SelecaoTabelas` with consolidated example, `ExecSQL`/`ExecSQLEx` with BLOB and transaction examples, transaction functions with observations and transfer example), plus whole-repo name/arity sweeps and `//`-comment anomaly review. Deferred `ListaRegra` families re-checked against the collections boundary. Current evidence base is community documentation and community examples; official Senior documentation was not locally available for this slice. Senior Sistemas is the authoritative source for official behavior.
+Transformed from `brunoleocam/Documentacao-LSP-Linguagem-Senior-de-Programacao/README.md`: `Definição de Cursor` in full (simple/complete patterns, no-mixing table, trade-offs, return-function catalog with quick reference, BOF/EOF control functions, observations, optimization guide with limitation table), `Funções SQL` in full (function table, `SQL_Criar` lifecycle with native/JOIN rules, placeholder security rule with naming convention and full example, SQL Senior 2 activation/restrictions, INSERT/SELECT/UPDATE examples, `__inserir` and `SQL_Definir` parameter passing, `SelecaoTabelas` with consolidated example, `ExecSQL`/`ExecSQLEx` with BLOB and transaction examples, transaction functions with observations and transfer example), plus whole-repo name/arity sweeps and `//`-comment anomaly review. The `R038HSA` abrangencia/report example (direct `:xnumemp`-style binds alongside `__Inserir(:xAbrMot)` for the assembled coverage fragment) corroborates the direct-value vs. dynamic-fragment scoping. Deferred `ListaRegra` families re-checked against the collections boundary. Production excerpts (E075PRO product lookup; E070FIL company/branch/date handling) and the `E075PRO.CODPRO`-is-`Alfa` field-type report were provided by the project maintainer and are marked as such where used. Current evidence base is community documentation, community examples, and maintainer-provided production excerpts; official Senior documentation was not locally available for this slice. Senior Sistemas is the authoritative source for official behavior.

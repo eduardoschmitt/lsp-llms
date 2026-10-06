@@ -1,0 +1,4 @@
+This directory will hold per-model static-check records once real evaluations run.
+Response files are immutable history; static outcomes are never presented
+as Senior runtime success; diagnoses and corrections live alongside them,
+never in their place. See ../README.md for the protocol.

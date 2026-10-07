@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="lsp-llms banner">
+  <rect width="1200" height="300" fill="#0E3A46"/>
+  <circle cx="1050" cy="40" r="120" fill="#177E89" opacity="0.25"/>
+  <circle cx="1120" cy="260" r="90" fill="#E8A33D" opacity="0.15"/>
+  <g transform="translate(80,86)">
+    <rect width="128" height="128" rx="26" fill="#F5F6F4" opacity="0.08"/>
+    <text x="64" y="84" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="56" font-weight="bold"><tspan fill="#E8A33D">{</tspan><tspan fill="#F5F6F4">:</tspan><tspan fill="#E8A33D">}</tspan></text>
+    <rect x="34" y="94" width="60" height="6" rx="3" fill="#177E89"/>
+  </g>
+  <text x="248" y="150" font-family="Verdana, Geneva, sans-serif" font-size="64" font-weight="bold" fill="#F5F6F4">lsp-llms</text>
+  <text x="250" y="200" font-family="Verdana, Geneva, sans-serif" font-size="26" fill="#E8A33D">Documentação fiel de LSP para LLMs e agentes de codificação</text>
+</svg>
